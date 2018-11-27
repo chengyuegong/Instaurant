@@ -16,20 +16,14 @@ import Geofirestore
 
 
 /*
- for ARKit reference images, the dataManager queries restaurants information from our database and will returan an array of restaurants.
- for restaurant information, the dataMangaer queries Yelp.
-
- to fetch restaurants information, we have some problems.
- 1. we need a location to find nearby restaurants
-    1(a) We need some way to calculate "nearby". Firestore can't do calculations in query
-    1(b) We need some way to store the location info in a Restaurant object
- 2. We need to store the images of these restaurants and use them as reference image for AR image recognition.
-    2(a) images might be many to take up memory.
-    2(b) images can't be stored in Firestore.
+ This is used for external access to the database.
+ usage: let manager = DataManager()
  
- Thoughts on them:
- 1. Plan A: we store latitude and longitude, calculate the distance.
-    Plan B: we store the address(streetNumber and streetName) and zip code, find the restaurants in the same street with close streetNumbers.
+ Create a restaurant:
+ manager.createRestaurant(AtLatitude: CLLocationDegrees, longitude: CLLocationDegrees, withName: String, withPhotos: [UIImage])) -> Restaurant?
+
+ Get restaurants:
+ manager.queryRestaurantAtFirebase(withID: String) -> [Restaurant]
  
  
  TODO:

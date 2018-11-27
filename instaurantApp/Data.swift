@@ -6,6 +6,10 @@
 //  Copyright © 2018 CSE@WashU. All rights reserved.
 //
 
+/*
+ This is used to accpet json file from yelp api
+ */
+
 import Foundation
 
 struct YelpAPIResults: Decodable {
