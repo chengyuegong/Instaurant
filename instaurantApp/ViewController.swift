@@ -9,10 +9,12 @@
 import UIKit
 import SceneKit
 import ARKit
+import CoreLocation
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    let locationManager = CLLocationManager() // location manager
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +30,26 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the scene to the view
         sceneView.scene = scene
+        
+        // Get the location permission and set delegate
+        isAuthorizedtoGetUserLocation()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        }
+    }
+
+    //if we have no permission to access user location, then ask user for permission.
+    func isAuthorizedtoGetUserLocation() {
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined, .restricted, .denied:
+            // Request when-in-use authorization initially
+            locationManager.requestWhenInUseAuthorization()
+            break
+        case .authorizedWhenInUse, .authorizedAlways:
+            // Enable location features
+            break
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

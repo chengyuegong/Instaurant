@@ -12,6 +12,12 @@
 		260FAD7921ADF4BF005E83C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 260FAD7721ADF4BF005E83C5 /* Main.storyboard */; };
 		260FAD7B21ADF4C0005E83C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 260FAD7A21ADF4C0005E83C5 /* Assets.xcassets */; };
 		260FAD7E21ADF4C0005E83C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 260FAD7C21ADF4C0005E83C5 /* LaunchScreen.storyboard */; };
+		260FAD8621ADFCC3005E83C5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 260FAD8521ADFCC2005E83C5 /* GoogleService-Info.plist */; };
+		260FAD8B21AE00FE005E83C5 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD8721AE00FA005E83C5 /* Restaurant.swift */; };
+		260FAD8C21AE00FE005E83C5 /* LocalCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD8821AE00FB005E83C5 /* LocalCollection.swift */; };
+		260FAD8D21AE00FE005E83C5 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD8921AE00FC005E83C5 /* DataManager.swift */; };
+		260FAD8E21AE00FE005E83C5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD8A21AE00FD005E83C5 /* Data.swift */; };
+		315785F71090170DD3AFE734 /* Pods_instaurantApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEBC3E954267BCFB8AC0FEB0 /* Pods_instaurantApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +28,14 @@
 		260FAD7A21ADF4C0005E83C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		260FAD7D21ADF4C0005E83C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		260FAD7F21ADF4C0005E83C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		260FAD8521ADFCC2005E83C5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		260FAD8721AE00FA005E83C5 /* Restaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		260FAD8821AE00FB005E83C5 /* LocalCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalCollection.swift; sourceTree = "<group>"; };
+		260FAD8921AE00FC005E83C5 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		260FAD8A21AE00FD005E83C5 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		6A9130C40BB3DEF329D2CA1E /* Pods-instaurantApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instaurantApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-instaurantApp/Pods-instaurantApp.release.xcconfig"; sourceTree = "<group>"; };
+		ABCA5539D84CDC5FC56D2AE1 /* Pods-instaurantApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instaurantApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-instaurantApp/Pods-instaurantApp.debug.xcconfig"; sourceTree = "<group>"; };
+		EEBC3E954267BCFB8AC0FEB0 /* Pods_instaurantApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_instaurantApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				315785F71090170DD3AFE734 /* Pods_instaurantApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +55,8 @@
 			children = (
 				260FAD7021ADF4BF005E83C5 /* instaurantApp */,
 				260FAD6F21ADF4BF005E83C5 /* Products */,
+				9C2DAE45BC5E506DE026F568 /* Pods */,
+				D9B5DCC6A2C4FD11978F6F63 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,12 +73,34 @@
 			children = (
 				260FAD7121ADF4BF005E83C5 /* AppDelegate.swift */,
 				260FAD7521ADF4BF005E83C5 /* ViewController.swift */,
+				260FAD8A21AE00FD005E83C5 /* Data.swift */,
+				260FAD8721AE00FA005E83C5 /* Restaurant.swift */,
+				260FAD8921AE00FC005E83C5 /* DataManager.swift */,
+				260FAD8821AE00FB005E83C5 /* LocalCollection.swift */,
 				260FAD7721ADF4BF005E83C5 /* Main.storyboard */,
 				260FAD7C21ADF4C0005E83C5 /* LaunchScreen.storyboard */,
 				260FAD7F21ADF4C0005E83C5 /* Info.plist */,
+				260FAD8521ADFCC2005E83C5 /* GoogleService-Info.plist */,
 				260FAD7A21ADF4C0005E83C5 /* Assets.xcassets */,
 			);
 			path = instaurantApp;
+			sourceTree = "<group>";
+		};
+		9C2DAE45BC5E506DE026F568 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ABCA5539D84CDC5FC56D2AE1 /* Pods-instaurantApp.debug.xcconfig */,
+				6A9130C40BB3DEF329D2CA1E /* Pods-instaurantApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D9B5DCC6A2C4FD11978F6F63 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EEBC3E954267BCFB8AC0FEB0 /* Pods_instaurantApp.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +110,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 260FAD8221ADF4C0005E83C5 /* Build configuration list for PBXNativeTarget "instaurantApp" */;
 			buildPhases = (
+				81749AECABF1FCE8EFE7A3C4 /* [CP] Check Pods Manifest.lock */,
 				260FAD6A21ADF4BF005E83C5 /* Sources */,
 				260FAD6B21ADF4BF005E83C5 /* Frameworks */,
 				260FAD6C21ADF4BF005E83C5 /* Resources */,
+				5B3646B8621A596B06704AC8 /* [CP] Embed Pods Frameworks */,
+				08476FFFEC7DDEFF2C72F204 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -123,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				260FAD7E21ADF4C0005E83C5 /* LaunchScreen.storyboard in Resources */,
+				260FAD8621ADFCC3005E83C5 /* GoogleService-Info.plist in Resources */,
 				260FAD7B21ADF4C0005E83C5 /* Assets.xcassets in Resources */,
 				260FAD7921ADF4BF005E83C5 /* Main.storyboard in Resources */,
 			);
@@ -130,13 +173,112 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		08476FFFEC7DDEFF2C72F204 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-instaurantApp/Pods-instaurantApp-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseFirestore/gRPCCertificates.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseAuthUI.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseGoogleAuthUI.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseAuthUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseGoogleAuthUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-instaurantApp/Pods-instaurantApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5B3646B8621A596B06704AC8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-instaurantApp/Pods-instaurantApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-instaurantApp/Pods-instaurantApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		81749AECABF1FCE8EFE7A3C4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-instaurantApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		260FAD6A21ADF4BF005E83C5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				260FAD7621ADF4BF005E83C5 /* ViewController.swift in Sources */,
+				260FAD8E21AE00FE005E83C5 /* Data.swift in Sources */,
+				260FAD8D21AE00FE005E83C5 /* DataManager.swift in Sources */,
 				260FAD7221ADF4BF005E83C5 /* AppDelegate.swift in Sources */,
+				260FAD8B21AE00FE005E83C5 /* Restaurant.swift in Sources */,
+				260FAD8C21AE00FE005E83C5 /* LocalCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +422,7 @@
 		};
 		260FAD8321ADF4C0005E83C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ABCA5539D84CDC5FC56D2AE1 /* Pods-instaurantApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -298,6 +441,7 @@
 		};
 		260FAD8421ADF4C0005E83C5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A9130C40BB3DEF329D2CA1E /* Pods-instaurantApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
