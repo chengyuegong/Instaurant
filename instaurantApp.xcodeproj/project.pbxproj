@@ -18,8 +18,8 @@
 		260FAD8D21AE00FE005E83C5 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD8921AE00FC005E83C5 /* DataManager.swift */; };
 		260FAD8E21AE00FE005E83C5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD8A21AE00FD005E83C5 /* Data.swift */; };
 		260FAD9021AE0548005E83C5 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD8F21AE0547005E83C5 /* RegistrationViewController.swift */; };
-		260FAD9221AE0830005E83C5 /* CustomerReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD9121AE0830005E83C5 /* CustomerReviewController.swift */; };
-		260FAD9421AE083C005E83C5 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD9321AE083C005E83C5 /* DetailController.swift */; };
+		260FAD9221AE0830005E83C5 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD9121AE0830005E83C5 /* ReviewViewController.swift */; };
+		260FAD9421AE083C005E83C5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD9321AE083C005E83C5 /* DetailViewController.swift */; };
 		315785F71090170DD3AFE734 /* Pods_instaurantApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEBC3E954267BCFB8AC0FEB0 /* Pods_instaurantApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,8 +37,8 @@
 		260FAD8921AE00FC005E83C5 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		260FAD8A21AE00FD005E83C5 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		260FAD8F21AE0547005E83C5 /* RegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
-		260FAD9121AE0830005E83C5 /* CustomerReviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerReviewController.swift; sourceTree = "<group>"; };
-		260FAD9321AE083C005E83C5 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
+		260FAD9121AE0830005E83C5 /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		260FAD9321AE083C005E83C5 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		6A9130C40BB3DEF329D2CA1E /* Pods-instaurantApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instaurantApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-instaurantApp/Pods-instaurantApp.release.xcconfig"; sourceTree = "<group>"; };
 		ABCA5539D84CDC5FC56D2AE1 /* Pods-instaurantApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instaurantApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-instaurantApp/Pods-instaurantApp.debug.xcconfig"; sourceTree = "<group>"; };
 		EEBC3E954267BCFB8AC0FEB0 /* Pods_instaurantApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_instaurantApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,8 +84,8 @@
 				260FAD8921AE00FC005E83C5 /* DataManager.swift */,
 				260FAD8821AE00FB005E83C5 /* LocalCollection.swift */,
 				260FAD8F21AE0547005E83C5 /* RegistrationViewController.swift */,
-				260FAD9121AE0830005E83C5 /* CustomerReviewController.swift */,
-				260FAD9321AE083C005E83C5 /* DetailController.swift */,
+				260FAD9121AE0830005E83C5 /* ReviewViewController.swift */,
+				260FAD9321AE083C005E83C5 /* DetailViewController.swift */,
 				260FAD7721ADF4BF005E83C5 /* Main.storyboard */,
 				260FAD7C21ADF4C0005E83C5 /* LaunchScreen.storyboard */,
 				260FAD7F21ADF4C0005E83C5 /* Info.plist */,
@@ -283,13 +283,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				260FAD7621ADF4BF005E83C5 /* ViewController.swift in Sources */,
-				260FAD9221AE0830005E83C5 /* CustomerReviewController.swift in Sources */,
+				260FAD9221AE0830005E83C5 /* ReviewViewController.swift in Sources */,
 				260FAD8E21AE00FE005E83C5 /* Data.swift in Sources */,
 				260FAD8D21AE00FE005E83C5 /* DataManager.swift in Sources */,
 				260FAD7221ADF4BF005E83C5 /* AppDelegate.swift in Sources */,
 				260FAD9021AE0548005E83C5 /* RegistrationViewController.swift in Sources */,
 				260FAD8B21AE00FE005E83C5 /* Restaurant.swift in Sources */,
-				260FAD9421AE083C005E83C5 /* DetailController.swift in Sources */,
+				260FAD9421AE083C005E83C5 /* DetailViewController.swift in Sources */,
 				260FAD8C21AE00FE005E83C5 /* LocalCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

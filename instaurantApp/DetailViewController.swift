@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailController: UIViewController {
+class DetailViewController: UIViewController {
     
     @IBOutlet weak var ResImage: UIImageView!
     
@@ -39,7 +39,7 @@ class DetailController: UIViewController {
         ResImage.image = image
         ResName.text = res.name
         Price.text = String(res.price!)
-        RatingCount.text = String(res.ratingCount!)
+        RatingCount.text = String(res.averageRating!)
         let AveRating = res.averageRating
         
         if(AveRating == 0){

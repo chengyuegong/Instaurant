@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomerReviewController: UIViewController {
+class ReviewViewController: UIViewController {
     
     
     @IBOutlet weak var CustomerReview: UITableView!

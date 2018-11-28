@@ -13,13 +13,14 @@ import CoreLocation
 
 class RegistrationViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate,UITextFieldDelegate {
 
-    @IBOutlet var button: UIButton!
+//    @IBOutlet var button: UIButton!
     @IBOutlet var name: UITextField!
     @IBOutlet var uploadImage: UIImageView!
     @IBOutlet var mapView: MKMapView!
     let locationManager = CLLocationManager()
     let image = UIImagePickerController()
     var theImage: [UIImage] = []
+    let dataManager = DataManager()
     
     @IBAction func addPhotoFromAlbums(_ sender: Any) {
         image.delegate = self
@@ -35,9 +36,9 @@ class RegistrationViewController: UIViewController,UIImagePickerControllerDelega
         self.present(image,animated: true)
     }
     
-    @IBAction func getLocation(_ sender: Any) {
-        locationManager.startUpdatingLocation()
-    }
+//    @IBAction func getLocation(_ sender: Any) {
+//        locationManager.startUpdatingLocation()
+//    }
     
     @IBAction func uploadData(_ sender: Any) {
 
@@ -45,7 +46,7 @@ class RegistrationViewController: UIViewController,UIImagePickerControllerDelega
         if(self.name.text==""||self.name.text==nil){
             text = "Create with no name?"
         }else{
-            text = "Make sure to create " + self.name.text! + " ?"
+            text = "Make sure to create " + self.name.text! + "?"
             
         }
         let alertController = UIAlertController(
@@ -61,7 +62,7 @@ class RegistrationViewController: UIViewController,UIImagePickerControllerDelega
         
         let confirmAction = UIAlertAction(
         title: "OK", style: UIAlertAction.Style.default) { (action) in
-//            DataManager.createRestaurant(AtLatitude: locationManager.location?.coordinate.latitude, longitude: locationManager.location?.coordinate.longitude, withName: name.text, withPhotos: theImage)
+            let _ = self.dataManager.createRestaurant(AtLatitude: (self.locationManager.location?.coordinate.latitude)!, longitude: (self.locationManager.location?.coordinate.longitude)!, withName: self.name.text!, withPhotos: self.theImage)
             self.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(confirmAction)
@@ -73,8 +74,8 @@ class RegistrationViewController: UIViewController,UIImagePickerControllerDelega
         self.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             theImage.append(image)
             uploadImage.image = theImage.last
         }
@@ -84,7 +85,7 @@ class RegistrationViewController: UIViewController,UIImagePickerControllerDelega
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         let curlocation = locations.last
-        let viewRegion = MKCoordinateRegionMakeWithDistance((curlocation?.coordinate)!,50,50)
+        let viewRegion = MKCoordinateRegion.init(center: (curlocation?.coordinate)!,latitudinalMeters: 50,longitudinalMeters: 50)
         self.mapView.setRegion(viewRegion,animated: true)
         self.mapView.showsUserLocation = true
         
@@ -92,8 +93,8 @@ class RegistrationViewController: UIViewController,UIImagePickerControllerDelega
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+        navigationItem.title = "Add Restaurant"
         self.name.delegate = self
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
@@ -105,27 +106,27 @@ class RegistrationViewController: UIViewController,UIImagePickerControllerDelega
         let endEditingTapGesture = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing(_:)))
         endEditingTapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(endEditingTapGesture)
+        locationManager.startUpdatingLocation()
         
-
-        
-        button.backgroundColor = UIColor.white
-        button.setTitleColor(UIColor.blue, for: UIControl.State.normal)
-        button.setTitle("Get your Location", for: UIControl.State.normal)
-        button.layer.masksToBounds = true
-        button.layer.cornerRadius = 10
-        button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.blue.cgColor
+//        button.backgroundColor = UIColor.white
+//        button.setTitleColor(UIColor.blue, for: UIControl.State.normal)
+//        button.setTitle("Get your Location", for: UIControl.State.normal)
+//        button.layer.masksToBounds = true
+//        button.layer.cornerRadius = 10
+//        button.layer.borderWidth = 2
+//        button.layer.borderColor = UIColor.blue.cgColor
         // Do any additional setup after loading the view.
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
-    
 
     /*
     // MARK: - Navigation

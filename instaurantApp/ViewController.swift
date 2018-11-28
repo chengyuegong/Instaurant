@@ -19,6 +19,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "Aim at a Storefront"
         // Set the view's delegate
         sceneView.delegate = self
         
