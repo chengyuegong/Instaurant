@@ -62,7 +62,7 @@ class RegistrationViewController: UIViewController,UIImagePickerControllerDelega
         
         let confirmAction = UIAlertAction(
         title: "OK", style: UIAlertAction.Style.default) { (action) in
-            let _ = self.dataManager.createRestaurant(AtLatitude: (self.locationManager.location?.coordinate.latitude)!, longitude: (self.locationManager.location?.coordinate.longitude)!, withName: self.name.text!, withPhotos: self.theImage)
+//            let _ = self.dataManager.createRestaurant(AtLatitude: (self.locationManager.location?.coordinate.latitude)!, longitude: (self.locationManager.location?.coordinate.longitude)!, withName: self.name.text!, withPhotos: self.theImage)
             self.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(confirmAction)

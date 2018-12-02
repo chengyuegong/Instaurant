@@ -20,7 +20,7 @@ class ExampleViewController: UIViewController {
         
         // Because all calls are asynchronous, you have to transfer a callback function parameter that you want to perform when the call completes.
         // for example, if you want to find possible restaurants near some place
-        manager.findPossibleRestaurants(AtLatitude: 38.6270, longitude: -90.199501, withName: "Starbucks", withRadiusByMeter: 500, completion: <#T##([YelpBusiness]) -> Void#>)
+//        manager.findPossibleRestaurants(AtLatitude: 38.6270, longitude: -90.199501, withName: "Starbucks", withRadiusByMeter: 500, completion: <#T##([YelpBusiness]) -> Void#>)
         
         // you have to transfer a function in the placeholder. And its type must be [YelpBusiness] -> Void.
         // for example, if you have the following function
@@ -62,19 +62,19 @@ class ExampleViewController: UIViewController {
         func handleWithCreatedRestaurant(r: Restaurant, error: Error?)->Void {
             // might want to transfer this object to other viewcontroller
         }
-        manager.createRestaurant(latitude: <#T##CLLocationDegrees#>, longitude: <#T##CLLocationDegrees#>, withName: <#T##String#>, withPhoto: <#T##UIImage#>, physicalWidthByMeter: <#T##Double#>, yelpID: <#T##String#>, completion: handleWithCreatedRestaurant)
+//        manager.createRestaurant(latitude: <#T##CLLocationDegrees#>, longitude: <#T##CLLocationDegrees#>, withName: <#T##String#>, withPhoto: <#T##UIImage#>, physicalWidthByMeter: <#T##Double#>, yelpID: <#T##String#>, completion: handleWithCreatedRestaurant)
         
         // 3. find some restaurants near some place in our database
         // it will provide you an array of Restaurant
-        manager.queryRestaurantsAtLocation(latitude: <#T##CLLocationDegrees#>, longitude: <#T##CLLocationDegrees#>, completion: <#T##([Restaurant]) -> Void#>)
+//        manager.queryRestaurantsAtLocation(latitude: <#T##CLLocationDegrees#>, longitude: <#T##CLLocationDegrees#>, completion: <#T##([Restaurant]) -> Void#>)
         
         // 4. get the detail of a restaurant
         // 4.1 if you have a Restaurant object, you can just call
-        let r = Restaurant(id: <#T##String#>, name: <#T##String#>, latitude: <#T##Double#>, longitude: <#T##Double#>, photos: <#T##[URL]#>, physicalSize: <#T##Double#>, yelpId: <#T##String#>)
-        r.details(completion: <#T##(YelpBusinessDetail, Error?) -> Void#>)
+//        let r = Restaurant(id: <#T##String#>, name: <#T##String#>, latitude: <#T##Double#>, longitude: <#T##Double#>, photos: <#T##[URL]#>, physicalSize: <#T##Double#>, yelpId: <#T##String#>)
+//        r.details(completion: <#T##(YelpBusinessDetail, Error?) -> Void#>)
         
         // 4.2 if you only have its yelpID
-        manager.queryYelpBussinessDetail(withYelpID: <#T##String#>, completion: <#T##(YelpBusinessDetail, Error?) -> Void#>)
+//        manager.queryYelpBussinessDetail(withYelpID: <#T##String#>, completion: <#T##(YelpBusinessDetail, Error?) -> Void#>)
         
         
         
@@ -90,7 +90,7 @@ class ExampleViewController: UIViewController {
             }
         }
         // then call the most outside function
-        manager.queryRestaurantsAtLocation(latitude: <#T##CLLocationDegrees#>, longitude: <#T##CLLocationDegrees#>, completion: doSomethingWhenIHaveRestaurants(restaurants:))
+//        manager.queryRestaurantsAtLocation(latitude: <#T##CLLocationDegrees#>, longitude: <#T##CLLocationDegrees#>, completion: doSomethingWhenIHaveRestaurants(restaurants:))
     }
     
     override func didReceiveMemoryWarning() {

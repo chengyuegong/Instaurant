@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Yelp_trademark_RGB.png",
+      "filename" : "following.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Yelp_trademark_RGB-1.png",
+      "filename" : "following@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Yelp_trademark_RGB-2.png",
+      "filename" : "following@3x.png",
       "scale" : "3x"
     }
   ],

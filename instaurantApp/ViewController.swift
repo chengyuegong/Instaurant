@@ -13,14 +13,19 @@ import CoreLocation
 
 class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDelegate {
 
+    @IBOutlet weak var detailBtn: UIButton!
     @IBOutlet var sceneView: ARSCNView!
     let locationManager = CLLocationManager() // location manager
     let node = SCNNode()
+    
+    var detail: YelpBusinessDetail?
+    let dataManager = DataManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "Aim at a Storefront"
+        detailBtn.isEnabled = false
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -39,6 +44,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
 //            locationManager.delegate = self
 //            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
 //        }
+        
+        dataManager.queryYelpBussinessDetail(withYelpID: "JuWE5ywjzZetPaanM8QQfg") { (retDetail, err) in
+                self.detail = retDetail
+                self.detailBtn.isEnabled = true
+        }
     }
 
     //if we have no permission to access user location, then ask user for permission.
@@ -59,7 +69,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-        configuration.detectionImages = ARReferenceImage.referenceImages(inGroupNamed: "images", bundle: Bundle.main)!
+//        configuration.detectionImages = ARReferenceImage.referenceImages(inGroupNamed: "images", bundle: Bundle.main)!
 
         // Run the view's session
         sceneView.session.run(configuration)
@@ -122,18 +132,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
         return node
     }
     
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
+    
+    @IBAction func toDetail(_ sender: UIButton) {
+        performSegue(withIdentifier: "ar2detail", sender: detail)
     }
     
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "ar2detail") {
+            let dest = segue.destination as! DetailViewController
+            dest.restaurant = (sender as! YelpBusinessDetail)
+        }
     }
     
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
-    }
 }

@@ -80,7 +80,7 @@ class DataManager {
         if photos.count == 0 { return }
         let image = photos[0]
         let imageRef = storageRef.child("\(id)/\(yelpID).png")
-        let data = UIImagePNGRepresentation(image)
+        let data = image.pngData()
         
         // Upload the file to the path "restaurantID/imagesIndex"
         _ = imageRef.putData(data!, metadata: nil) { (metadata, error) in
