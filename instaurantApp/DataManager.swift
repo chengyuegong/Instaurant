@@ -16,129 +16,111 @@ import Geofirestore
 
 
 /*
- This is used for external access to the database.
- usage: let manager = DataManager()
- 
- Create a restaurant:
- manager.createRestaurant(AtLatitude: CLLocationDegrees, longitude: CLLocationDegrees, withName: String, withPhotos: [UIImage])) -> Restaurant?
-
- Get restaurants:
- manager.queryRestaurantAtFirebase(withID: String) -> [Restaurant]
- 
- 
- TODO:
- error handling
- progress observing
- testing
+ (1) DataManager是给外部保存数据和存储数据用的。
  */
 
 class DataManager {
-    // to add a restaurant
-    // TODO: fetch possible restaurants in yelp if we want to provide a range of restaurants for users to choose.
-    // In addition, we need to create a new struct for mere yelp business info
+    static let storageRef = Storage.storage().reference() // use Cloud Storage to store images
+    static let restaurantsRef = Firestore.firestore().collection("restaurants") // use Firestore to store restaurants
+    static let geoRestaurants = GeoFirestore(collectionRef: restaurantsRef) // use GeoFirestore to query restaurants within some loction
+    static private let API_key = "E2A_xJMsnSy8fJ5UN6nq6l4ZDy9iFSVRAvfKtvB86-6_sZwx_AyjJEHrGpzAkjBAlQWbKpRQR4-0YqIWTpV565X4DXbPJLQabFDWST9lx6xr4fSNqQNq7C-oQLQAXHYx"
     
-    // store info
-    static let storageRef = Storage.storage().reference()
-    static let restaurantsRef = Firestore.firestore().collection("restaurants")
-    static let geoRestaurants = GeoFirestore(collectionRef: restaurantsRef)
+    // MARK: to add a restaurant
+    // fetch possible restaurants in yelp
+    func findPossibleRestaurants(AtLatitude latitude: CLLocationDegrees, longitude: CLLocationDegrees, withName name: String, withRadiusByMeter radius: Int ,completion: @escaping ([YelpBusiness])->Void) {
+        // try to get the info in yelp.
+        let url = URL(string: "https://api.yelp.com/v3/businesses/search?term=\(name)&latitude=\(latitude)&longitude=\(longitude)&radius=\(radius)&limit=10")!
+        let task = queryYelpAPI(url: url) {
+            (data, response, error) in
+            // try to decode the returned json from Yelp
+            guard let api_results: YelpAPIResults = try? JSONDecoder().decode(YelpAPIResults.self, from: data!) else { return }
+            //            print("[tiancheng] api results: \(String(describing: api_results))")
+            completion(api_results.businesses)
+        }
+        task.resume()
+    }
     
-    func createRestaurant(AtLatitude latitude: CLLocationDegrees, longitude: CLLocationDegrees, withName name: String, withPhotos photos: [UIImage]) -> Restaurant? {
-        // try to get the info in yelp
-        guard let url = URL(string: "https://api.yelp.com/v3/businesses/search?term=\(name)&latitude=\(latitude)&longitude=\(longitude)&radius=50") else {
-            return nil
+    func createRestaurant(latitude: CLLocationDegrees, longitude: CLLocationDegrees, withName name: String, withPhoto photo: UIImage, physicalWidthByMeter physicalSize: Double, yelpID: String, completion: @escaping (Restaurant, Error?)->Void) -> Void {
+        self.createRestaurantWith(name: name, latitude: latitude, longitude: longitude, photos: [photo], physicalSize: physicalSize, price: nil, reviewCount: nil, averageRating: nil, yelpId: yelpID) {
+            (restaurant, error) in
+            completion(restaurant, error)
         }
-        guard let data = try? Data(contentsOf: url) else {
-            return nil
-        }
-        // try to decode the returned json from Yelp
-        let api_results: YelpAPIResults = try! JSONDecoder().decode(YelpAPIResults.self, from: data)
-        
-        // FIXME: need to test the real returning results
-        if api_results.total > 0 {
-            let business = api_results.businesses[0]
-            return createRestaurantWith(name: name, latitude: latitude, longitude: longitude, photos: photos, price: business.price, reviewCount: business.review_count, averageRating: business.rating, yelpId: business.id)
-        } else {
-            return createRestaurantWith(name: name, latitude: latitude, longitude: longitude, photos: photos, price: nil, reviewCount: nil, averageRating: nil, yelpId: nil)
-        }
+    }
+    
+    private func queryYelpAPI(url: URL, completion:(@escaping (Data?, URLResponse?, Error?) -> Void)) -> URLSessionDataTask {
+        var request: URLRequest = URLRequest(url: url)
+        request.setValue("Bearer \(DataManager.API_key)", forHTTPHeaderField: "Authorization")
+        request.timeoutInterval = 10
+        return URLSession.shared.dataTask(with: request, completionHandler: completion)
     }
     
     // create a Restaurant object and store it in our database
-    func createRestaurantWith(name: String, latitude: Double, longitude: Double, photos: [UIImage], price: String?, reviewCount: Int?, averageRating: Double?, yelpId: String?) -> Restaurant? {
+    private func createRestaurantWith(name: String, latitude: Double, longitude: Double, photos: [UIImage], physicalSize: Double, price: String?, reviewCount: Int?, averageRating: Double?, yelpId: String, completion: @escaping (Restaurant, Error?)->Void) -> Void {
         // create a new document
         let docRef = DataManager.restaurantsRef.document()
         let id = docRef.documentID
-        // save images and get the urls
-        let imagesUrls = storeImagesAtFirebase(photos: photos, forDocumentWithID: id)
         
-        // save locations
-        storeLocationAtFirebase(latitude: latitude, longitude: longitude, forDocumentWithID: id)
-        
-        // save the restaurant
-        let restaurant = Restaurant(id: id, name: name, latitude: latitude, longitude: longitude, photos: imagesUrls, price: price, reviewCount: reviewCount, averageRating: averageRating, yelpId: yelpId)
-        docRef.setData(restaurant.dictionary)
-        return restaurant
-    }
-
-    func storeImagesAtFirebase(photos: [UIImage], forDocumentWithID id: String) -> [URL] {
-        let storageRef = DataManager.storageRef
-        var imagesURLs: [URL] = []
-        for (index, image) in photos.enumerated() {
-            let imageRef = storageRef.child("\(id)/\(index).png")
-            let data = image.pngData()
-            
-            // Upload the file to the path "restaurantID/imagesIndex"
-            let uploadTask = imageRef.putData(data!, metadata: nil) { (metadata, error) in
-                imageRef.downloadURL { (url, error) in
-                    guard let downloadURL = url else { return }
-                    imagesURLs.append(downloadURL)
+        // first, save images
+        _ = storeImagesAtFirebase(photos: photos, forDocumentWithID: id, withYelpID: yelpId) {  (url, error) in
+            // second, store locations
+            self.storeLocationAtFirebase(latitude: latitude, longitude: longitude, forDocumentWithID: id) { (error) in
+                // third, perform completion handler
+                let restaurant = Restaurant(id: id, name: name, latitude: latitude, longitude: longitude, photos: [url], physicalSize: physicalSize, yelpId: yelpId)
+                docRef.setData(restaurant.dictionary, merge: true) {
+                    (error) in
+                    completion(restaurant,error)
                 }
             }
         }
-        return imagesURLs
     }
     
-    func storeLocationAtFirebase(latitude: Double, longitude: Double, forDocumentWithID id: String) {
+    private func storeImagesAtFirebase(photos: [UIImage], forDocumentWithID id: String, withYelpID yelpID: String, completion: @escaping (URL, Error?)->Void) -> Void {
+        let storageRef = DataManager.storageRef
+        var imagesURLs: [URL] = []
+        if photos.count == 0 { return }
+        let image = photos[0]
+        let imageRef = storageRef.child("\(id)/\(yelpID).png")
+        let data = UIImagePNGRepresentation(image)
+        
+        // Upload the file to the path "restaurantID/imagesIndex"
+        _ = imageRef.putData(data!, metadata: nil) { (metadata, error) in
+            imageRef.downloadURL { (url, error) in
+                guard let downloadURL = url else { return }
+                imagesURLs.append(downloadURL)
+                // completion handler
+                completion(imagesURLs[0], error)
+            }
+        }
+    }
+    
+    private func storeLocationAtFirebase(latitude: Double, longitude: Double, forDocumentWithID id: String, completion: @escaping (Error?) -> Void) {
         DataManager.geoRestaurants.setLocation(location: CLLocation(latitude: latitude, longitude: longitude), forDocumentWithID: id) { (error) in
             if (error != nil) {
                 print("An error occured: \(String(describing: error))")
             } else {
-                print("Saved location successfully!")
+                completion(error)
             }
         }
     }
     
-    func createRestaurant(withYelpBusiness business: YelpBusiness, withPhotos photos: [UIImage]) -> Restaurant? {
-        return createRestaurantWith(name: business.name, latitude: business.coordinates.latitude, longitude: business.coordinates.longitude, photos: photos, price: business.price, reviewCount: business.review_count, averageRating: business.rating, yelpId: business.id)
-    }
-    
-    
-//    // try to fetch yelp info
-//    func queryYelpInfoForRestaurant(AtLatitude latitude: CLLocationDegrees, longitude: CLLocationDegrees, withName name: String) -> Restaurant?{
-//        return nil
-//    }
-//
-//    //set yelp info for the restaurant
-//    func setYelpInfoForRestaurant(_ restaurant: inout Restaurant, withYelpId id: String) -> Bool {
-//        return false
-//    }
-    
-    // to recognize
+    //MARK: to recognize
     // find nearby restaurants
-    func queryRestaurantsAtLocation(latitude: CLLocationDegrees, longitude: CLLocationDegrees) -> [Restaurant] {
+    func queryRestaurantsAtLocation(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: @escaping ([Restaurant])->Void) -> Void {
         var restaurants: [Restaurant] = []
         let center = CLLocation(latitude: latitude, longitude: longitude)
         let query = DataManager.geoRestaurants.query(withCenter: center, radius: 0.05) //radius of 50 meters
-        let queryHandle = query.observe(.documentEntered, with: { (key, location) in
-            if let restaurant = self.queryRestaurantAtFirebase(withID: key!) {
+        let _ = query.observe(.documentEntered, with: { (key, location) in
+            self.queryRestaurantAtFirebase(withID: key!) { (restaurant, error) in
                 restaurants.append(restaurant)
             }
         })
-        return restaurants
+        let _ = query.observeReady {
+            completion(restaurants)
+        }
     }
     
     // get the restaurant with its id
-    func queryRestaurantAtFirebase(withID id: String) -> Restaurant? {
-        var restaurant: Restaurant?
+    func queryRestaurantAtFirebase(withID id: String, completion:@escaping (Restaurant, Error?)->Void) -> Void {
         let docRef = DataManager.restaurantsRef.document(id)
         docRef.getDocument { (document, error) in
             if let result = document.flatMap({
@@ -146,39 +128,108 @@ class DataManager {
                     return Restaurant(dictionary: data)
                 })
             }) {
+                // perform completion handler
                 print("Restaurant: \(result)")
-                restaurant = result
+                completion(result, error)
             } else {
                 print("Document does not exist")
             }
         }
-        return restaurant
     }
     
-    // get images of a restaurant
-    func queryPhotosOfRestaurant(withID id: String) -> [UIImage] {
-        var photos: [UIImage] = []
-        guard let restaurant = queryRestaurantAtFirebase(withID: id) else { return [] }
-        for url in restaurant.photos {
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    photos.append(image)
-                }
-            }
-            
+    // get the yelp info with its yelp id
+    func queryYelpBussinessDetail(withYelpID id: String, completion:@escaping (YelpBusinessDetail, Error?)->Void) -> Void {
+        let url = URL(string: "https://api.yelp.com/v3/businesses/\(id)")!
+        let task = queryYelpAPI(url: url) { (data, response, error) in
+            // try to decode the returned json from Yelp
+            guard let api_result: YelpBusinessDetail = try? JSONDecoder().decode(YelpBusinessDetail.self, from: data!) else {return}
+            completion(api_result, error)
         }
-        return photos
+        task.resume()
     }
     
-    // TODO: return ARReference images of a restaurant
-    // I find it needs a phsicalWidth and I have no idea how to set it
-    func queryARReferenceImagesOfRestaurant(withID id: String) -> [ARReferenceImage]{
-        let photos = queryPhotosOfRestaurant(withID: id)
-        var references: [ARReferenceImage] = []
-        for photo in photos {
-            let arImage = ARReferenceImage(photo.cgImage!, orientation: CGImagePropertyOrientation.up, physicalWidth: 2.5) //FIXME: physical width needed for each photo. Unit: meter
-            references.append(arImage)
-        }
-        return references
-    }
+    
+    
+    
+    // Unused and stored methods
+    
+    //    // get images of a restaurant
+    //    func queryPhotosOfRestaurant(withID id: String, completion:@escaping ([UIImage], Error?)->Void) -> Void {
+    //        var photos: [UIImage] = []
+    //        queryRestaurantAtFirebase(withID: id){ (restaurant, error) in
+    //            if (restaurant.photos.count > 0) {
+    //                for url in restaurant.photos {
+    //                    if let data = try? Data(contentsOf: url) {
+    //                        if let image = UIImage(data: data) {
+    //                            photos.append(image)
+    //                        }
+    //                    }
+    //                }
+    //                completion(photos, error)
+    //            }
+    //        }
+    //    }
+    //
+    //
+    //
+    //    // TODO: return ARReference images of a restaurant
+    //    // I find it needs a phsicalWidth and I have no idea how to set it
+    //    func queryARReferenceImagesOfRestaurant(withID id: String) -> [ARReferenceImage]{
+    //        let photos = queryPhotosOfRestaurant(withID: id)
+    //        var references: [ARReferenceImage] = []
+    //        for photo in photos {
+    //            let arImage = ARReferenceImage(photo.cgImage!, orientation: CGImagePropertyOrientation.up, physicalWidth: 2.5) //FIXME: physical width needed for each photo. Unit: meter
+    //            references.append(arImage)
+    //        }
+    //        return references
+    //    }
+    //
+    //    func queryARReferenceImagesOfRestaurant(withID id: String, completion:@escaping ([ARReferenceImage], Error?)->Void) -> Void {
+    //        var photos: [UIImage] = []
+    //        queryPhotosOfRestaurant(withID: id) { (images, error) in
+    //            for photo in photos {
+    //                let arImage = ARReferenceImage(photo.cgImage!, orientation: CGImagePropertyOrientation.up, physicalWidth: 2.5) //FIXME: physical width needed for each photo. Unit: meter
+    //                references.append(arImage)
+    //            }
+    //        }
+    //
+    //        queryRestaurantAtFirebase(withID: id){ (restaurant, error) in
+    //            if (restaurant.photos.count > 0) {
+    //                for url in restaurant.photos {
+    //                    if let data = try? Data(contentsOf: url) {
+    //                        if let image = UIImage(data: data) {
+    //                            photos.append(image)
+    //                        }
+    //                    }
+    //                }
+    //                completion(photos, error)
+    //            }
+    //        }
+    //    }
+    
+    
+    //    func createRestaurant(AtLatitude latitude: CLLocationDegrees, longitude: CLLocationDegrees, withName name: String, withPhotos photos: [UIImage], physicalWidthByMeter physicalSize: Double, completion: @escaping (Restaurant, Error?)->Void) -> Void {
+    //        // try to get the info in yelp.
+    //        let url = URL(string: "https://api.yelp.com/v3/businesses/search?term=\(name)&latitude=\(latitude)&longitude=\(longitude)&radius=50&limit=10")!
+    //        let task = queryYelpAPI(url: url) {
+    //            (data, response, error) in
+    //            // try to decode the returned json from Yelp
+    //            guard let api_results: YelpAPIResults = try? JSONDecoder().decode(YelpAPIResults.self, from: data!) else { return }
+    //            print("[tiancheng] api results: \(String(describing: api_results))")
+    //            if api_results.total > 0 {
+    //                let business = api_results.businesses[0]
+    //                _ = self.createRestaurantWith(name: name, latitude: latitude, longitude: longitude, photos: photos, physicalSize: physicalSize, price: business.price, reviewCount: business.review_count, averageRating: business.rating, yelpId: business.id) { (restaurant, error) in
+    //                    completion(restaurant, error)
+    //                }
+    //            } else {
+    //                _ = self.createRestaurantWith(name: name, latitude: latitude, longitude: longitude, photos: photos, physicalSize: physicalSize, price: nil, reviewCount: nil, averageRating: nil, yelpId: nil) { (restaurant, error) in
+    //                    completion(restaurant, error)
+    //                }
+    //            }
+    //        }
+    //        task.resume()
+    //    }
+    
+    
+    
 }
