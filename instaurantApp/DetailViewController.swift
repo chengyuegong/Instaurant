@@ -10,120 +10,61 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    @IBOutlet weak var ResImage: UIImageView!
+    var res: YelpBusiness?
+    @IBOutlet weak var ratingStars: UIImageView!
     
-    @IBOutlet weak var ResName: UILabel!
-    
-    @IBOutlet weak var Price: UILabel!
-    
-    @IBOutlet weak var RatingCount: UILabel!
-    
-    @IBOutlet weak var StarOne: UIImageView!
-    
-    @IBOutlet weak var StarTwo: UIImageView!
-    
-    @IBOutlet weak var StarThree: UIImageView!
-    
-    @IBOutlet weak var StarFour: UIImageView!
-    
-    @IBOutlet weak var StarFive: UIImageView!
-    
-    
-    func ResDetail(res: Restaurant){
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        let path = res.photos[0].path
-        let url = URL(string: path)
-        let data = try? Data(contentsOf: url!)
-        let image = UIImage(data: data!)
-        
-        ResImage.image = image
-        ResName.text = res.name
-        Price.text = String(res.price!)
-        RatingCount.text = String(res.averageRating!)
-        let AveRating = res.averageRating
-        
-        if(AveRating == 0){
-            StarOne.image = UIImage(named: "emptyStar")
-            StarTwo.image = UIImage(named: "emptyStar")
-            StarThree.image = UIImage(named: "emptyStar")
-            StarFour.image = UIImage(named: "emptyStar")
-            StarFive.image = UIImage(named: "emptyStar")
-        }
-        if(AveRating == 0.5){
-            StarOne.image = UIImage(named: "halfStar")
-            StarTwo.image = UIImage(named: "emptyStar")
-            StarThree.image = UIImage(named: "emptyStar")
-            StarFour.image = UIImage(named: "emptyStar")
-            StarFive.image = UIImage(named: "emptyStar")
-        }
-        if(AveRating == 1){
-            StarOne.image = UIImage(named: "filledStar")
-            StarTwo.image = UIImage(named: "emptyStar")
-            StarThree.image = UIImage(named: "emptyStar")
-            StarFour.image = UIImage(named: "emptyStar")
-            StarFive.image = UIImage(named: "emptyStar")
-        }
-        if(AveRating == 1.5){
-            StarOne.image = UIImage(named: "filledStar")
-            StarTwo.image = UIImage(named: "halfStar")
-            StarThree.image = UIImage(named: "emptyStar")
-            StarFour.image = UIImage(named: "emptyStar")
-            StarFive.image = UIImage(named: "emptyStar")
-        }
-        if(AveRating == 2){
-            StarOne.image = UIImage(named: "filledStar")
-            StarTwo.image = UIImage(named: "filledStar")
-            StarThree.image = UIImage(named: "emptyStar")
-            StarFour.image = UIImage(named: "emptyStar")
-            StarFive.image = UIImage(named: "emptyStar")
-        }
-        if(AveRating == 2.5){
-            StarOne.image = UIImage(named: "filledStar")
-            StarTwo.image = UIImage(named: "filledStar")
-            StarThree.image = UIImage(named: "halfStar")
-            StarFour.image = UIImage(named: "emptyStar")
-            StarFive.image = UIImage(named: "emptyStar")
-        }
-        if(AveRating == 3){
-            StarOne.image = UIImage(named: "filledStar")
-            StarTwo.image = UIImage(named: "filledStar")
-            StarThree.image = UIImage(named: "filledStar")
-            StarFour.image = UIImage(named: "emptyStar")
-            StarFive.image = UIImage(named: "emptyStar")
-        }
-        if(AveRating == 3.5){
-            StarOne.image = UIImage(named: "filledStar")
-            StarTwo.image = UIImage(named: "filledStar")
-            StarThree.image = UIImage(named: "filledStar")
-            StarFour.image = UIImage(named: "halfStar")
-            StarFive.image = UIImage(named: "emptyStar")
-        }
-        if(AveRating == 4){
-            StarOne.image = UIImage(named: "filledStar")
-            StarTwo.image = UIImage(named: "filledStar")
-            StarThree.image = UIImage(named: "filledStar")
-            StarFour.image = UIImage(named: "filledStar")
-            StarFive.image = UIImage(named: "emptyStar")
-        }
-        if(AveRating == 4.5){
-            StarOne.image = UIImage(named: "filledStar")
-            StarTwo.image = UIImage(named: "filledStar")
-            StarThree.image = UIImage(named: "filledStar")
-            StarFour.image = UIImage(named: "filledStar")
-            StarFive.image = UIImage(named: "halfStar")
-        }
-        if(AveRating == 5){
-            StarOne.image = UIImage(named: "filledStar")
-            StarTwo.image = UIImage(named: "filledStar")
-            StarThree.image = UIImage(named: "filledStar")
-            StarFour.image = UIImage(named: "filledStar")
-            StarFive.image = UIImage(named: "filledStar")
-        }
-        
-        
+//        navigationItem.title = res!.name
+//        displayDetail()
     }
     
-   
+    @IBAction func Favorate(_ sender: Any) {
+        //FavButton.image = UIImage(named: "filledai")
+    }
     
+    
+    func displayDetail() {
+//        for i in 0..<res.photos.count {
+//            let path = res.photos[i].path
+//            let url = URL(string: path)
+//            let data = try? Data(contentsOf: url!)
+//            let image = UIImage(data: data!)
+//            let imageView = UIImageView()
+//            let x = self.view.frame.size.width * CGFloat(i)
+//            imageView.frame = CGRect(x: x, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+//            imageView.contentMode = .scaleAspectFit
+//            imageView.image = image
+//            ResImg.contentSize.width = ResImg.frame.size.width * CGFloat(i + 1)
+//            ResImg.addSubview(imageView)
+//        }
+//
+//        Price.text = String(res.price!)
+//
+        let rating = res!.rating
+        
+        if (rating == 0){
+            ratingStars.image = UIImage(named: "0")
+        } else if (rating == 1){
+            ratingStars.image = UIImage(named: "1")
+        } else if (rating == 1.5){
+            ratingStars.image = UIImage(named: "1.5")
+        } else if (rating == 2){
+            ratingStars.image = UIImage(named: "2")
+        } else if (rating == 2.5){
+            ratingStars.image = UIImage(named: "2.5")
+        } else if (rating == 3){
+            ratingStars.image = UIImage(named: "3")
+        } else if (rating == 3.5){
+            ratingStars.image = UIImage(named: "3.5")
+        } else if(rating == 4){
+            ratingStars.image = UIImage(named: "4")
+        } else if(rating == 4.5){
+            ratingStars.image = UIImage(named: "4.5")
+        } else if(rating == 5){
+            ratingStars.image = UIImage(named: "5")
+        }
+    }
     
 }

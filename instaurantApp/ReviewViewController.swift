@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReviewViewController: UIViewController {
+class YelpWebController: UIViewController {
     
     
     @IBOutlet weak var CustomerReview: UITableView!
