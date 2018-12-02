@@ -75,21 +75,96 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZIa-tr-4jn">
-                                <rect key="frame" x="34" y="533" width="120" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="See more on Yelp"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZIa-tr-4jn">
+                                <rect key="frame" x="66" y="579" width="106" height="27"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="Read more on Yelp"/>
+                                <connections>
+                                    <action selector="toYelpPage:" destination="lO2-Hc-I9E" eventType="touchUpInside" id="VOe-yu-82l"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yelp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MDw-Bb-0wr">
+                                <rect key="frame" x="66" y="564.5" width="24.5" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yelp_burst" translatesAutoresizingMaskIntoConstraints="NO" id="BxJ-D2-VQS">
+                                <rect key="frame" x="16" y="556" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ItU-EI-ma7"/>
+                                    <constraint firstAttribute="width" constant="50" id="itL-iC-lKM"/>
+                                </constraints>
+                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WkP-V6-53E">
+                                <rect key="frame" x="0.0" y="64" width="375" height="241"/>
+                            </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s9U-qj-4wO">
+                                <rect key="frame" x="25" y="338" width="66" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Categories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zmA-vt-9Jw">
+                                <rect key="frame" x="25" y="399" width="84" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Zp-CE-pXd">
+                                <rect key="frame" x="25" y="428" width="39" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Review count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JSL-p3-VJ0">
+                                <rect key="frame" x="204" y="460" width="103" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="UN2-eW-GsR">
+                                <rect key="frame" x="25" y="456" width="164" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="164" id="A9f-1C-ho0"/>
+                                    <constraint firstAttribute="height" constant="28" id="Fbl-e4-SZL"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CVc-aO-UaO">
+                                <rect key="frame" x="25" y="504" width="49" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="BxJ-D2-VQS" firstAttribute="leading" secondItem="Q1a-eM-nhX" secondAttribute="leading" constant="16" id="36c-YW-eJg"/>
+                            <constraint firstItem="Q1a-eM-nhX" firstAttribute="bottom" secondItem="BxJ-D2-VQS" secondAttribute="bottom" constant="12" id="9JD-6a-tzh"/>
+                            <constraint firstItem="MDw-Bb-0wr" firstAttribute="leading" secondItem="BxJ-D2-VQS" secondAttribute="trailing" id="E1c-yv-YH1"/>
+                            <constraint firstItem="ZIa-tr-4jn" firstAttribute="top" secondItem="MDw-Bb-0wr" secondAttribute="bottom" id="Gmr-7X-t1y"/>
+                            <constraint firstItem="WkP-V6-53E" firstAttribute="leading" secondItem="Q1a-eM-nhX" secondAttribute="leading" id="U19-bF-wjp"/>
+                            <constraint firstItem="Q1a-eM-nhX" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MDw-Bb-0wr" secondAttribute="trailing" id="Xpj-jF-cfW"/>
+                            <constraint firstItem="ZIa-tr-4jn" firstAttribute="leading" secondItem="BxJ-D2-VQS" secondAttribute="trailing" id="g21-WI-xfr"/>
+                            <constraint firstItem="Q1a-eM-nhX" firstAttribute="bottom" secondItem="ZIa-tr-4jn" secondAttribute="bottom" constant="12" id="n2S-ii-MlL"/>
+                            <constraint firstItem="WkP-V6-53E" firstAttribute="top" secondItem="Q1a-eM-nhX" secondAttribute="top" id="nIE-aQ-To2"/>
+                            <constraint firstItem="WkP-V6-53E" firstAttribute="trailing" secondItem="Q1a-eM-nhX" secondAttribute="trailing" id="zXB-Pq-53Y"/>
+                            <constraint firstItem="Q1a-eM-nhX" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZIa-tr-4jn" secondAttribute="trailing" id="zww-q6-SOh"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Q1a-eM-nhX"/>
                     </view>
                     <navigationItem key="navigationItem" id="PlY-2i-ro0"/>
                     <connections>
-                        <segue destination="wgS-IR-43N" kind="show" identifier="detail2yelp" id="iqm-eB-hhc"/>
+                        <segue destination="wgS-IR-43N" kind="show" identifier="detail2yelp" id="p1k-Na-ZuT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IjX-Rb-BHG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="lO2-Hc-I9E" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3898.4000000000001" y="706.59670164917543"/>
         </scene>
@@ -372,7 +447,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yelp" translatesAutoresizingMaskIntoConstraints="NO" id="rfB-kt-acR">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yelp_logo" translatesAutoresizingMaskIntoConstraints="NO" id="rfB-kt-acR">
                                 <rect key="frame" x="62.5" y="377" width="250" height="160"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="Zu5-Fg-WIU"/>
@@ -438,9 +513,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="0" width="82" height="14"/>
         <image name="About" width="30" height="30"/>
         <image name="Camera" width="30" height="30"/>
-        <image name="yelp" width="250" height="160"/>
+        <image name="yelp_burst" width="90" height="90"/>
+        <image name="yelp_logo" width="250" height="160"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="4VV-fD-6Ue"/>

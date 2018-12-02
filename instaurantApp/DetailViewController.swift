@@ -67,4 +67,16 @@ class DetailViewController: UIViewController {
         }
     }
     
+    
+    @IBAction func toYelpPage(_ sender: UIButton) {
+        //performSegue(withIdentifier: "detail2yelp", sender: res.url)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "detail2yelp") {
+            let dest = segue.destination as! YelpViewController
+            dest.urlString = (sender as! String)
+        }
+    }
+    
 }

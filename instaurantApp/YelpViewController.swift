@@ -11,13 +11,15 @@ import WebKit
 
 class YelpViewController: UIViewController {
     
+    var urlString: String!
     @IBOutlet weak var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let url = URL(string: "https://www.yelp.com")!
+        print("Open webpage \(String(describing: urlString))")
+        let url = URL(string: urlString)!
         let myURLRequest = URLRequest(url: url)
         webView.load(myURLRequest)
     }
