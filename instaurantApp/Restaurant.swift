@@ -7,13 +7,15 @@
 //  Code modified from the google Firestore example project.
 
 /*
- This is used to save our restaurants information
+ (2) Restaurant是我们保存信息的结构
  
- usage: let r = some function returing result
- 
- Additional attributes:
- r.UIImagesOfPhotos: return the photos of the resturant (UIImage)
- r.ARReferenceImagesOfPhotos: return the photos of the resturant (ARReferenceImage), currently not recommended since every ARReference needs physical size (temporarily set to 2.5m for each photo)
+ 普通属性直接调, 如r.id
+ 额外有两个属性:
+ r.uiImage, 返回这个餐馆的照片(UIImage)
+ r.arImage, 返回这个餐馆的照片(ARReferenceImage)
+ 和一个方法：
+ r.details(completionHandler)
+ 这是一个异步请求Yelp里detail的方法，所以必须有callback函数
  */
 
 import Foundation
@@ -29,12 +31,10 @@ struct Restaurant: Codable {
     var latitude: Double
     var longitude: Double
     var photos: [URL]
+    var physicalSize: Double
     
     // review info
-    var price: String? // from "$" to "$$$$"; could also be an enum
-    var reviewCount: Int? // number of reviews
-    var averageRating: Double? // [0,0.5,1,1.5...4.5,5]
-    var yelpId: String?
+    var yelpId: String
     
     var dictionary: [String: Any] {
         return [
@@ -42,51 +42,95 @@ struct Restaurant: Codable {
             "name": name,
             "latitude": latitude,
             "longitude": longitude,
-            "photos": photos,// ? photo.absoluteString
+            "photos": photos.map{ $0.absoluteString },// ? photo.absoluteString
+            "physicalSize": physicalSize,
             
-            "price": price as Any,
-            "reviewCount": reviewCount as Any,
-            "averageRating": averageRating as Any,
-            "yelpId": yelpId as Any]
+            "yelpId": yelpId]
     }
-
+    
+    
+    // get yelp details object of this restaurant, including:
+    // yelp url
+    // categories
+    // location
+    // display phone
+    // photos
+    
+    func details(completion: @escaping (YelpBusinessDetail, Error?)->Void) {
+        let manager = DataManager()
+        manager.queryYelpBussinessDetail(withYelpID: yelpId, completion: completion)
+    }
+    
+    //    var details: YelpBusinessDetail? {
+    //        let manager = DataManager()
+    //        return yelpId != nil ? manager.queryYelpBussinessDetail(withYelpID: yelpId!) : nil
+    //    }
+    
+    // get UIImages of the photos of this restaurant
+    var uiImage: UIImage? {
+        if photos.count < 1 {return nil}
+        let url = photos[0]
+        if let data = try? Data(contentsOf: url) {
+            return UIImage(data: data)
+        }
+        return nil
+    }
+    
+    var arImage: ARReferenceImage? {
+        guard let image = self.uiImage else {return nil}
+        return ARReferenceImage(image.cgImage!, orientation: CGImagePropertyOrientation.up, physicalWidth: CGFloat(self.physicalSize))
+    }
+    
+//    var UIImagesOfPhotos: [UIImage] {
+//        var imagesOfPhotos: [UIImage] = []
+//        for url in self.photos {
+//            if let data = try? Data(contentsOf: url) {
+//                if let image = UIImage(data: data) {
+//                    imagesOfPhotos.append(image)
+//                }
+//            }
+//        }
+//        return imagesOfPhotos
+//    }
+//    
+//    // get ar references images of the photos of this restaurant
+//    var ARReferenceImagesOfPhotos: [ARReferenceImage] {
+//        var imagesOfPhotos: [ARReferenceImage] = []
+//        for photo in self.UIImagesOfPhotos {
+//            let arImage = ARReferenceImage(photo.cgImage!, orientation: CGImagePropertyOrientation.up, physicalWidth: CGFloat(self.physicalSize))
+//            imagesOfPhotos.append(arImage)
+//        }
+//        return imagesOfPhotos
+//    }
 }
 
 extension Restaurant: DocumentSerializable {
-    // get UIImages of the photos of this restaurant
-    var UIImagesOfPhotos: [UIImage] {
-        let dataManager = DataManager()
-        return dataManager.queryPhotosOfRestaurant(withID: self.id)
-    }
     
-    // get ar references images of the photos of this restaurant
-    var ARReferenceImagesOfPhotos: [ARReferenceImage] {
-        let dataManager = DataManager()
-        return dataManager.queryARReferenceImagesOfRestaurant(withID: self.id)
-    }
-
+    
+    
     
     init?(dictionary: [String : Any]) {
         guard let name = dictionary["name"] as? String,
             let id = dictionary["id"] as? String,
             let latitude = dictionary["latitude"] as? Double,
             let longitude = dictionary["longitude"] as? Double,
-            let photos = dictionary["photos"] as? [URL] else { return nil }
+            let photoURLStrings = dictionary["photos"] as? [String],
+            let physicalSize = dictionary["physicalSize"] as? Double,
+            let yelpId = dictionary["yelpId"] as? String else { return nil }
         
-            let price = dictionary["price"] as? String
-            let reviewCount = dictionary["reviewCount"] as? Int
-            let averageRating = dictionary["averageRating"] as? Double
-            let yelpId = dictionary["yelpId"] as? String
-            //let photo = (dictionary["photo"] as? String).flatMap(URL.init(string:))
-
+        guard let photos = photoURLStrings.map(URL.init(string:)) as? [URL] else { return nil}
+        
+        //            let price = dictionary["price"] as? String
+        //            let reviewCount = dictionary["reviewCount"] as? Int
+        //            let averageRating = dictionary["averageRating"] as? Double
+        //let photo = (dictionary["photo"] as? String).flatMap(URL.init(string:))
+        
         self.init(id: id,
                   name: name,
                   latitude: latitude,
                   longitude: longitude,
                   photos: photos,
-                  price: price,
-                  reviewCount: reviewCount,
-                  averageRating: averageRating,
+                  physicalSize: physicalSize,
                   yelpId: yelpId)
     }
     

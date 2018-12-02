@@ -14,6 +14,9 @@
 //  limitations under the License.
 //
 
+
+// NOTE: the file comes from the google example project of Firestore, FriendlyEats.
+
 import Firebase
 
 // A type that can be initialized from a Firestore document.

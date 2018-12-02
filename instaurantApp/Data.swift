@@ -7,23 +7,36 @@
 //
 
 /*
- This is used to accpet json file from yelp api
+ (3) 专门用来接收yelp api的返回Json
  */
 
 import Foundation
 
-struct YelpAPIResults: Decodable {
-    let total: Int
-    let businesses: [YelpBusiness]
+// for possible restaurants near some place
+struct YelpBusiness: Codable {
+    let id: String
+    let coordinates: Coordinates
+    let name: String
+    //    let price: String
+    //    let rating: Double
+    //    let review_count: Int
+    let location: Location
 }
 
-struct YelpBusiness: Codable {
+// for detail view
+struct YelpBusinessDetail: Codable {
     let id: String!
-    let coordinates: Coordinates!
+    let url: String!
     let name: String!
     let price: String!
     let rating: Double!
     let review_count: Int!
+    
+    let display_phone: String?
+    let photos: [String]
+    let categories: [Category]
+    let location: Location
+    
 }
 
 struct Coordinates: Codable {
@@ -31,4 +44,17 @@ struct Coordinates: Codable {
     let latitude: Double!
 }
 
+struct Category: Codable {
+    let alias: String!
+    let title: String!
+}
+
+struct Location: Codable {
+    let display_address: [String]
+}
+
+struct YelpAPIResults:Decodable {
+    let total: Int
+    let businesses: [YelpBusiness]
+}
 
