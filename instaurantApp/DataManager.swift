@@ -29,7 +29,8 @@ class DataManager {
     // fetch possible restaurants in yelp
     func findPossibleRestaurants(AtLatitude latitude: CLLocationDegrees, longitude: CLLocationDegrees, withName name: String, withRadiusByMeter radius: Int ,completion: @escaping ([YelpBusiness])->Void) {
         // try to get the info in yelp.
-        let url = URL(string: "https://api.yelp.com/v3/businesses/search?term=\(name)&latitude=\(latitude)&longitude=\(longitude)&radius=\(radius)&limit=10")!
+        let escapedName = name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        let url = URL(string: "https://api.yelp.com/v3/businesses/search?term=\(escapedName)&latitude=\(latitude)&longitude=\(longitude)&radius=\(radius)&limit=10")!
         let task = queryYelpAPI(url: url) {
             (data, response, error) in
             // try to decode the returned json from Yelp

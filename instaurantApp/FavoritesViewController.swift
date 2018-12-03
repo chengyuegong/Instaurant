@@ -40,8 +40,9 @@ class FavoritesViewController: UIViewController,UITableViewDataSource,UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "fCell")
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "fCell")
         cell.textLabel!.text = theFavorites[indexPath.row].name
+        cell.detailTextLabel!.text = theFavorites[indexPath.row].address
         return cell
     }
     

@@ -13,19 +13,38 @@ import CoreLocation
 
 class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDelegate {
 
-    @IBOutlet weak var detailBtn: UIButton!
-    @IBOutlet var sceneView: ARSCNView!
-    let locationManager = CLLocationManager() // location manager
-    let node = SCNNode()
-    
     var detail: YelpBusinessDetail?
     let dataManager = DataManager()
+    let locationManager = CLLocationManager()
+    let node = SCNNode()
+    let configuration = ARWorldTrackingConfiguration() // Create a session configuration
+    
+    @IBOutlet weak var detailBtn: UIButton!
+    @IBOutlet var sceneView: ARSCNView!
+    
+    var currentLoc: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Aim at a Storefront"
-        detailBtn.isEnabled = false
+        tabBarController?.tabBar.backgroundImage = UIImage()
+        tabBarController?.tabBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        
+        // Get the location permission and set delegate
+        // isAuthorizedtoGetUserLocation()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        }
+        locationManager.startUpdatingLocation()
+//        print("Start updating location")
+        
+        detailBtn.setTitleColor(UIColor.gray, for: .disabled)
+        
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -38,19 +57,35 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
         // Set the scene to the view
         sceneView.scene = scene
         
-        // Get the location permission and set delegate
-//        isAuthorizedtoGetUserLocation()
-//        if CLLocationManager.locationServicesEnabled() {
-//            locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+//        dataManager.queryYelpBussinessDetail(withYelpID: "0JnsAQFvOFxPltNU_smK3w") { (retDetail, err) in
+//            DispatchQueue.main.async {
+//                self.detail = retDetail
+//                self.detailBtn.isEnabled = true
+//            }
 //        }
-        
-        dataManager.queryYelpBussinessDetail(withYelpID: "JuWE5ywjzZetPaanM8QQfg") { (retDetail, err) in
-                self.detail = retDetail
-                self.detailBtn.isEnabled = true
+    }
+    
+    // CLLocationManagerDelegate
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        manager.stopUpdatingLocation()
+        currentLoc = locations.last
+        let latitude = currentLoc?.coordinate.latitude
+        let longitude = currentLoc?.coordinate.longitude
+        print("latitude = \(latitude!), longitude = \(longitude!)")
+        dataManager.queryRestaurantsAtLocation(latitude: latitude!, longitude: longitude!) { (restaurants) in
+//                self.configuration.detectionImages.removeAll()
+            DispatchQueue.global(qos: .background).async {
+                for restaurant in restaurants {
+                    restaurant.arImage?.name = restaurant.yelpId
+                    self.configuration.detectionImages.insert(restaurant.arImage!)
+                }
+                print("Downloaded \(self.configuration.detectionImages.count) images")
+                // Run the view's session
+                self.sceneView.session.run(self.configuration, options: [.removeExistingAnchors])
+            }
         }
     }
-
+    
     //if we have no permission to access user location, then ask user for permission.
 //    func isAuthorizedtoGetUserLocation() {
 //        switch CLLocationManager.authorizationStatus() {
@@ -67,16 +102,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-//        configuration.detectionImages = ARReferenceImage.referenceImages(inGroupNamed: "images", bundle: Bundle.main)!
-
-        // Run the view's session
-        sceneView.session.run(configuration)
-        
         for childNode in node.childNodes {
             childNode.removeFromParentNode()
         }
+        
+        detailBtn.isEnabled = false
+        sceneView.session.run(configuration)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -85,15 +116,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
         // Pause the view's session
         sceneView.session.pause()
     }
-
-//    func getInfo() -> Restaurant {
-//        // find the restaurant
-//    }
     
     func createNode(headingString: String, position: SCNVector3) -> SCNNode {
         let headingText = SCNText(string: headingString, extrusionDepth: 1)
         headingText.flatness = 0.1
-        headingText.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        headingText.font = UIFont.systemFont(ofSize: 100, weight: .bold)
         let headingTextNode = SCNNode(geometry: headingText)
         headingTextNode.eulerAngles.x = -.pi / 2
         headingTextNode.scale = SCNVector3(0.0005, 0.0005, 0.0005)
@@ -110,31 +137,33 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
             let imageSize = imageAnchor.referenceImage.physicalSize
             
             // info for displaying, need to be used to match info in FireBase
-//            let restaurant = getInfo(id: yelpId)
-//            var name: String = restaurant.name
-//            var price: String = restaurant.price!
-//            var rate: Double = restaurant.averageRating!
-            let name = "Upass"
-            let price = "$10.00"
-            let rate = "5.0"
-            
-            // let nameString = imageAnchor.referenceImage.name == "id" ? "Store Name: " + storeName : "Gift Card Value"
-            // let priceString = imageAnchor.referenceImage.name == "id" ? "Price: " + price : "$18.39"
-            // let rateString = imageAnchor.referenceImage.name == "id" ? "Rating: " + rating : "test"
-            
-            let namePosition = SCNVector3(-imageSize.width / 2, 0, -imageSize.height * 0.9)
-            node.addChildNode(createNode(headingString: name, position: namePosition))
-            let pricePosition = SCNVector3(-imageSize.width / 2, 0, -imageSize.height * 0.75)
-            node.addChildNode(createNode(headingString: price, position: pricePosition))
-            let ratePosition = SCNVector3(-imageSize.width / 2, 0, -imageSize.height * 0.6)
-            node.addChildNode(createNode(headingString: "\(rate)", position: ratePosition))
+            let yelpId = imageAnchor.referenceImage.name
+            dataManager.queryYelpBussinessDetail(withYelpID: yelpId!) { (retDetail, err) in
+                DispatchQueue.main.async {
+                    self.detail = retDetail
+                    self.detailBtn.isEnabled = true
+                    let namePosition = SCNVector3(-imageSize.width / 2, 0, -imageSize.height * 0.9)
+                    self.node.addChildNode(self.createNode(headingString: retDetail.name, position: namePosition))
+                    let pricePosition = SCNVector3(-imageSize.width / 2, 0, -imageSize.height * 0.75)
+                    if (retDetail.price != nil) {
+                        self.node.addChildNode(self.createNode(headingString: "Price: \(retDetail.price!)", position: pricePosition))
+                    } else {
+                        self.node.addChildNode(self.createNode(headingString: "Unknown $", position: pricePosition))
+                    }
+                    let ratePosition = SCNVector3(-imageSize.width / 2, 0, -imageSize.height * 0.6)
+                    self.node.addChildNode(self.createNode(headingString: "Rating: \(retDetail.rating!)", position: ratePosition))
+                }
+            }
         }
         return node
     }
     
-    
     @IBAction func toDetail(_ sender: UIButton) {
-        performSegue(withIdentifier: "ar2detail", sender: detail)
+        if detail != nil {
+            performSegue(withIdentifier: "ar2detail", sender: detail)
+        } else {
+            print("Haven't found a restaurant!")
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

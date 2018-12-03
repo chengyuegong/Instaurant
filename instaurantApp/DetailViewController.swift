@@ -44,7 +44,7 @@ class DetailViewController: UIViewController {
     func displayDetail() {
         displayPhotos()
         location1.text = restaurant.location.display_address[0]
-        location2.text = restaurant.location.display_address[1]
+        location2.text = restaurant.location.display_address.last
         displayCategories()
         price.text = restaurant.price
         displayRating()
@@ -107,7 +107,8 @@ class DetailViewController: UIViewController {
     
     @IBAction func addToFavorites(_ sender: UIBarButtonItem) {
         if (favBtn.image!.isEqual(UIImage(named: "emptyHeart"))) {
-            database.addToDatabase(id: restaurant.id, name: restaurant.name)
+            let addr = location1.text! + ", " + location2.text!
+            database.addToDatabase(id: restaurant.id, name: restaurant.name, address: addr)
             favBtn.image = UIImage(named: "filledHeart")
         } else {
             database.deleteFromDatabase(id: restaurant.id)

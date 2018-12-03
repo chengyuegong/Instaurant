@@ -11,9 +11,11 @@ import Foundation
 struct dbRestaurant {
     let id: String
     let name: String
-    init(id: String, name: String) {
+    let address: String
+    init(id: String, name: String, address: String) {
         self.id = id
         self.name = name
+        self.address = address
     }
 }
 
@@ -33,7 +35,7 @@ class FavoritesDB {
         }
         if (!fileExists) {
             print("create a database at \(dbPath)")
-            let sqlStatement = "CREATE TABLE FAVORITES(ID STRING PRIMARY KEY, NAME STRING NOT NULL)"
+            let sqlStatement = "CREATE TABLE FAVORITES(ID STRING PRIMARY KEY, NAME STRING NOT NULL, ADDRESS STRING)"
             print("create a database: \(sqlStatement)")
             if (!database.executeStatements(sqlStatement)) {
                 print("Failed to create a table")
@@ -50,8 +52,9 @@ class FavoritesDB {
             while (results.next()) {
                 let id = results.string(forColumn: "id")
                 let name = results.string(forColumn: "name")
-                print("Load restaurant: \(id!), \(name!)")
-                theFavorites.append(dbRestaurant(id:id!, name:name!))
+                let address = results.string(forColumn: "address")
+                print("Load restaurant: \(id!), \(name!) at \(address!)")
+                theFavorites.append(dbRestaurant(id:id!, name:name!, address: address!))
             }
         } catch let error as NSError {
             print("Failed: \(error)")
@@ -59,9 +62,9 @@ class FavoritesDB {
         return theFavorites
     }
     
-    func addToDatabase(id: String, name: String) {
+    func addToDatabase(id: String, name: String, address: String) {
         let name = name.replacingOccurrences(of: "'", with: "''")
-        let sqlStatement = "INSERT INTO FAVORITES (ID,NAME) VALUES ('\(id)','\(name)')"
+        let sqlStatement = "INSERT INTO FAVORITES (ID,NAME,ADDRESS) VALUES ('\(id)','\(name)','\(address)')"
         print("add: \(sqlStatement)")
         if (!database.executeStatements(sqlStatement)) {
             print("Failed to add \(name)(\(id)) to database")
