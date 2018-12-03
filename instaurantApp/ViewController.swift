@@ -32,16 +32,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         
-        // Get the location permission and set delegate
-        // isAuthorizedtoGetUserLocation()
+        // Get the location permission
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestAlwaysAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        }
-        locationManager.startUpdatingLocation()
-//        print("Start updating location")
         
         detailBtn.setTitleColor(UIColor.gray, for: .disabled)
         
@@ -67,17 +60,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
     
     // CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("Hello location manager")
         manager.stopUpdatingLocation()
+        manager.delegate = nil
         currentLoc = locations.last
         let latitude = currentLoc?.coordinate.latitude
         let longitude = currentLoc?.coordinate.longitude
         print("latitude = \(latitude!), longitude = \(longitude!)")
         dataManager.queryRestaurantsAtLocation(latitude: latitude!, longitude: longitude!) { (restaurants) in
 //                self.configuration.detectionImages.removeAll()
-            DispatchQueue.global(qos: .background).async {
+            DispatchQueue.global(qos: .userInitiated).async {
                 for restaurant in restaurants {
-                    restaurant.arImage?.name = restaurant.yelpId
-                    self.configuration.detectionImages.insert(restaurant.arImage!)
+                    let arImage: ARReferenceImage! = restaurant.arImage!
+                    arImage.name = restaurant.yelpId
+                    print(restaurant.yelpId)
+                    self.configuration.detectionImages.insert(arImage)
                 }
                 print("Downloaded \(self.configuration.detectionImages.count) images")
                 // Run the view's session
@@ -85,19 +82,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
             }
         }
     }
-    
-    //if we have no permission to access user location, then ask user for permission.
-//    func isAuthorizedtoGetUserLocation() {
-//        switch CLLocationManager.authorizationStatus() {
-//        case .notDetermined, .restricted, .denied:
-//            // Request when-in-use authorization initially
-//            locationManager.requestWhenInUseAuthorization()
-//            break
-//        case .authorizedWhenInUse, .authorizedAlways:
-//            // Enable location features
-//            break
-//        }
-//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -107,7 +91,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
         }
         
         detailBtn.isEnabled = false
-        sceneView.session.run(configuration)
+        locationManager.startUpdatingLocation()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -138,6 +126,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
             
             // info for displaying, need to be used to match info in FireBase
             let yelpId = imageAnchor.referenceImage.name
+            print("yelpId = \(yelpId!)")
             dataManager.queryYelpBussinessDetail(withYelpID: yelpId!) { (retDetail, err) in
                 DispatchQueue.main.async {
                     self.detail = retDetail

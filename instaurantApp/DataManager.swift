@@ -79,7 +79,7 @@ class DataManager {
         let storageRef = DataManager.storageRef
         var imagesURLs: [URL] = []
         if photos.count == 0 { return }
-        let image = photos[0]
+        let image = photos[0].resizedTo1MB() ?? photos[0]
         let imageRef = storageRef.child("\(id)/\(yelpID).png")
         let data = image.pngData()
         

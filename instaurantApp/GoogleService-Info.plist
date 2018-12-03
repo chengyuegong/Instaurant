@@ -7,34 +7,34 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>271807502234-nj5rhbhrrpfsk7fro4vqvheoikavrojf.apps.googleusercontent.com</string>
+	<string>85881086781-nnmfmdfa9qouamhu396cj46hlaq3tfnj.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.271807502234-nj5rhbhrrpfsk7fro4vqvheoikavrojf</string>
+	<string>com.googleusercontent.apps.85881086781-nnmfmdfa9qouamhu396cj46hlaq3tfnj</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDzwL2_RBgim7SCk8VWV4swnbm5i89kKBM</string>
+	<string>AIzaSyAAMmHPRaDA0-WH6XNIZ35y0aGff4EMdYM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>271807502234</string>
+	<string>85881086781</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>CSE438.instaurantApp</string>
 	<key>PROJECT_ID</key>
-	<string>instaurant-b6015</string>
+	<string>instaurantapp</string>
 	<key>STORAGE_BUCKET</key>
-	<string>instaurant-b6015.appspot.com</string>
+	<string>instaurantapp.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:271807502234:ios:82c5f906b1410059</string>
+	<string>1:85881086781:ios:82c5f906b1410059</string>
 	<key>DATABASE_URL</key>
-	<string>https://instaurant-b6015.firebaseio.com</string>
+	<string>https://instaurantapp.firebaseio.com</string>
 </dict>
 </plist>

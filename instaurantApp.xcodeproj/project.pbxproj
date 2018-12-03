@@ -12,7 +12,6 @@
 		260FAD7921ADF4BF005E83C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 260FAD7721ADF4BF005E83C5 /* Main.storyboard */; };
 		260FAD7B21ADF4C0005E83C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 260FAD7A21ADF4C0005E83C5 /* Assets.xcassets */; };
 		260FAD7E21ADF4C0005E83C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 260FAD7C21ADF4C0005E83C5 /* LaunchScreen.storyboard */; };
-		260FAD8621ADFCC3005E83C5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 260FAD8521ADFCC2005E83C5 /* GoogleService-Info.plist */; };
 		260FAD8B21AE00FE005E83C5 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD8721AE00FA005E83C5 /* Restaurant.swift */; };
 		260FAD8C21AE00FE005E83C5 /* LocalCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD8821AE00FB005E83C5 /* LocalCollection.swift */; };
 		260FAD8D21AE00FE005E83C5 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260FAD8921AE00FC005E83C5 /* DataManager.swift */; };
@@ -29,6 +28,13 @@
 		2674EB1721B3CE660028C306 /* FavoritesDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2674EB1621B3CE650028C306 /* FavoritesDB.swift */; };
 		2674EB1921B3CF1A0028C306 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2674EB1821B3CF1A0028C306 /* libsqlite3.tbd */; };
 		2674EB1B21B3D2180028C306 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2674EB1A21B3D2170028C306 /* FavoritesViewController.swift */; };
+		2674EB2521B49E200028C306 /* WidthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2674EB2021B49E180028C306 /* WidthViewController.swift */; };
+		2674EB2621B49E200028C306 /* NameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2674EB2121B49E1A0028C306 /* NameViewController.swift */; };
+		2674EB2721B49E200028C306 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2674EB2221B49E1C0028C306 /* ImageViewController.swift */; };
+		2674EB2821B49E200028C306 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2674EB2321B49E1E0028C306 /* LocationViewController.swift */; };
+		2674EB2921B49E200028C306 /* NearByViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2674EB2421B49E200028C306 /* NearByViewController.swift */; };
+		2674EB2B21B4B8CE0028C306 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2674EB2A21B4B8CE0028C306 /* GoogleService-Info.plist */; };
+		2674EB2D21B4BD9A0028C306 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2674EB2C21B4BD990028C306 /* UIImage+Resize.swift */; };
 		315785F71090170DD3AFE734 /* Pods_instaurantApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEBC3E954267BCFB8AC0FEB0 /* Pods_instaurantApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +46,6 @@
 		260FAD7A21ADF4C0005E83C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		260FAD7D21ADF4C0005E83C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		260FAD7F21ADF4C0005E83C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		260FAD8521ADFCC2005E83C5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		260FAD8721AE00FA005E83C5 /* Restaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		260FAD8821AE00FB005E83C5 /* LocalCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalCollection.swift; sourceTree = "<group>"; };
 		260FAD8921AE00FC005E83C5 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -64,6 +69,13 @@
 		2674EB1621B3CE650028C306 /* FavoritesDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesDB.swift; sourceTree = "<group>"; };
 		2674EB1821B3CF1A0028C306 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		2674EB1A21B3D2170028C306 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		2674EB2021B49E180028C306 /* WidthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidthViewController.swift; sourceTree = "<group>"; };
+		2674EB2121B49E1A0028C306 /* NameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameViewController.swift; sourceTree = "<group>"; };
+		2674EB2221B49E1C0028C306 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		2674EB2321B49E1E0028C306 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		2674EB2421B49E200028C306 /* NearByViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearByViewController.swift; sourceTree = "<group>"; };
+		2674EB2A21B4B8CE0028C306 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2674EB2C21B4BD990028C306 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		6A9130C40BB3DEF329D2CA1E /* Pods-instaurantApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instaurantApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-instaurantApp/Pods-instaurantApp.release.xcconfig"; sourceTree = "<group>"; };
 		ABCA5539D84CDC5FC56D2AE1 /* Pods-instaurantApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instaurantApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-instaurantApp/Pods-instaurantApp.debug.xcconfig"; sourceTree = "<group>"; };
 		EEBC3E954267BCFB8AC0FEB0 /* Pods_instaurantApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_instaurantApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,15 +122,21 @@
 				2674EB0321B3A9E40028C306 /* DataManagerUsageExample.swift */,
 				260FAD8821AE00FB005E83C5 /* LocalCollection.swift */,
 				2674EB1621B3CE650028C306 /* FavoritesDB.swift */,
+				2674EB2C21B4BD990028C306 /* UIImage+Resize.swift */,
 				260FAD7521ADF4BF005E83C5 /* ViewController.swift */,
 				2674EB1A21B3D2170028C306 /* FavoritesViewController.swift */,
 				260FAD8F21AE0547005E83C5 /* RegistrationViewController.swift */,
+				2674EB2221B49E1C0028C306 /* ImageViewController.swift */,
+				2674EB2321B49E1E0028C306 /* LocationViewController.swift */,
+				2674EB2121B49E1A0028C306 /* NameViewController.swift */,
+				2674EB2421B49E200028C306 /* NearByViewController.swift */,
+				2674EB2021B49E180028C306 /* WidthViewController.swift */,
 				260FAD9321AE083C005E83C5 /* DetailViewController.swift */,
 				260FAD9121AE0830005E83C5 /* YelpViewController.swift */,
 				260FAD7721ADF4BF005E83C5 /* Main.storyboard */,
 				260FAD7C21ADF4C0005E83C5 /* LaunchScreen.storyboard */,
 				260FAD7F21ADF4C0005E83C5 /* Info.plist */,
-				260FAD8521ADFCC2005E83C5 /* GoogleService-Info.plist */,
+				2674EB2A21B4B8CE0028C306 /* GoogleService-Info.plist */,
 				2674EB0A21B3CE3D0028C306 /* FMDatabase.h */,
 				2674EB0921B3CE3C0028C306 /* FMDatabase.m */,
 				2674EB0C21B3CE420028C306 /* FMDatabaseAdditions.h */,
@@ -217,7 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				260FAD7E21ADF4C0005E83C5 /* LaunchScreen.storyboard in Resources */,
-				260FAD8621ADFCC3005E83C5 /* GoogleService-Info.plist in Resources */,
+				2674EB2B21B4B8CE0028C306 /* GoogleService-Info.plist in Resources */,
 				260FAD7B21ADF4C0005E83C5 /* Assets.xcassets in Resources */,
 				260FAD7921ADF4BF005E83C5 /* Main.storyboard in Resources */,
 			);
@@ -325,11 +343,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2674EB2821B49E200028C306 /* LocationViewController.swift in Sources */,
+				2674EB2621B49E200028C306 /* NameViewController.swift in Sources */,
 				260FAD7621ADF4BF005E83C5 /* ViewController.swift in Sources */,
+				2674EB2721B49E200028C306 /* ImageViewController.swift in Sources */,
 				2674EB1221B3CE4A0028C306 /* FMDatabasePool.m in Sources */,
+				2674EB2921B49E200028C306 /* NearByViewController.swift in Sources */,
 				2674EB1321B3CE4A0028C306 /* FMDatabase.m in Sources */,
 				260FAD9221AE0830005E83C5 /* YelpViewController.swift in Sources */,
 				2674EB0421B3A9E50028C306 /* DataManagerUsageExample.swift in Sources */,
+				2674EB2521B49E200028C306 /* WidthViewController.swift in Sources */,
 				2674EB1721B3CE660028C306 /* FavoritesDB.swift in Sources */,
 				2674EB1521B3CE4A0028C306 /* FMDatabaseQueue.m in Sources */,
 				2674EB1421B3CE4A0028C306 /* FMDatabaseAdditions.m in Sources */,
@@ -340,6 +363,7 @@
 				260FAD9021AE0548005E83C5 /* RegistrationViewController.swift in Sources */,
 				260FAD8B21AE00FE005E83C5 /* Restaurant.swift in Sources */,
 				2674EB1121B3CE4A0028C306 /* FMResultSet.m in Sources */,
+				2674EB2D21B4BD9A0028C306 /* UIImage+Resize.swift in Sources */,
 				260FAD9421AE083C005E83C5 /* DetailViewController.swift in Sources */,
 				260FAD8C21AE00FE005E83C5 /* LocalCollection.swift in Sources */,
 			);
