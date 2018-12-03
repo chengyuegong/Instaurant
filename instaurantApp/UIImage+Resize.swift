@@ -1,11 +1,12 @@
 //
 //  UIImage+Resize.swift
-//  Instaurant
+//  instaurantApp
 //
 //  Created by Metaphor on 12/2/18.
+//  Author: Tiancheng He
 //  Copyright © 2018 CSE@WashU. All rights reserved.
 //
-// The code comes from https://stackoverflow.com/questions/29137488/how-do-i-resize-the-uiimage-to-reduce-upload-image-size
+// NOTE: The code comes from https://stackoverflow.com/questions/29137488/how-do-i-resize-the-uiimage-to-reduce-upload-image-size
 
 import Foundation
 import UIKit

@@ -1,17 +1,20 @@
 //
-//  ViewController.swift
+//  ARViewController.swift
 //  instaurantApp
 //
 //  Created by Chengyue Gong on 2018/11/27.
+//  Author: Pengqiu Meng & Chengyue Gong
 //  Copyright © 2018 CSE@WashU. All rights reserved.
 //
+
+// Note: Code sources from “Lecture14-StudentCard.zip” (from https://research.engineering.wustl.edu/~todd/cse438/)
 
 import UIKit
 import SceneKit
 import ARKit
 import CoreLocation
 
-class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDelegate {
+class ARViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDelegate {
 
     var detail: YelpBusinessDetail?
     let dataManager = DataManager()
@@ -60,7 +63,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
     
     // CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("Hello location manager")
         manager.stopUpdatingLocation()
         manager.delegate = nil
         currentLoc = locations.last
@@ -68,8 +70,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
         let longitude = currentLoc?.coordinate.longitude
         print("latitude = \(latitude!), longitude = \(longitude!)")
         dataManager.queryRestaurantsAtLocation(latitude: latitude!, longitude: longitude!) { (restaurants) in
-//                self.configuration.detectionImages.removeAll()
             DispatchQueue.global(qos: .userInitiated).async {
+                self.configuration.detectionImages.removeAll()
                 for restaurant in restaurants {
                     let arImage: ARReferenceImage! = restaurant.arImage!
                     arImage.name = restaurant.yelpId
@@ -85,11 +87,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         for childNode in node.childNodes {
             childNode.removeFromParentNode()
         }
-        
         detailBtn.isEnabled = false
         locationManager.startUpdatingLocation()
         if CLLocationManager.locationServicesEnabled() {
@@ -100,7 +100,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         // Pause the view's session
         sceneView.session.pause()
     }
@@ -120,7 +119,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDele
     
     // Override to create and configure nodes for anchors added to the view's session.
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        // Code sources from “Lecture14-StudentCard.zip” (from https://research.engineering.wustl.edu/~todd/cse438/)
         if let imageAnchor = anchor as? ARImageAnchor {
             let imageSize = imageAnchor.referenceImage.physicalSize
             

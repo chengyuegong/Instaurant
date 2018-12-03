@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Instaurant
+//  instaurantApp
 //
 //  Created by Metaphor on 11/27/18.
 //  Copyright © 2018 CSE@WashU. All rights reserved.

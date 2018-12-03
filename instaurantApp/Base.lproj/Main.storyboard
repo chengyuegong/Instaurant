@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="instaurantApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="ARViewController" customModule="instaurantApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U0K-SW-4ec">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -259,10 +259,14 @@
                                     <constraint firstAttribute="height" constant="230" id="oLQ-cM-PMj"/>
                                 </constraints>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKU-X4-4Rz">
-                                <rect key="frame" x="157" y="343" width="49" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Submit"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKU-X4-4Rz">
+                                <rect key="frame" x="147.5" y="344" width="80" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="k76-MG-5jB"/>
+                                </constraints>
+                                <state key="normal" title="Submit">
+                                    <color key="titleColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="submit:" destination="wik-VC-U9h" eventType="touchUpInside" id="YNt-q9-IHE"/>
                                 </connections>
@@ -270,6 +274,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="iKU-X4-4Rz" firstAttribute="top" secondItem="Zbp-Er-Cnn" secondAttribute="bottom" constant="50" id="Dsm-tH-tEq"/>
+                            <constraint firstItem="iKU-X4-4Rz" firstAttribute="centerX" secondItem="3LX-UJ-TIk" secondAttribute="centerX" id="Tlu-18-NMd"/>
                             <constraint firstItem="Zbp-Er-Cnn" firstAttribute="leading" secondItem="3LX-UJ-TIk" secondAttribute="leading" id="bKV-Bb-rel"/>
                             <constraint firstItem="Zbp-Er-Cnn" firstAttribute="top" secondItem="3LX-UJ-TIk" secondAttribute="top" id="blY-NP-NA0"/>
                             <constraint firstItem="Zbp-Er-Cnn" firstAttribute="trailing" secondItem="3LX-UJ-TIk" secondAttribute="trailing" id="mV0-aT-shV"/>
@@ -278,6 +284,7 @@
                     </view>
                     <connections>
                         <outlet property="myTableView" destination="Zbp-Er-Cnn" id="28B-Um-ffN"/>
+                        <outlet property="submitButton" destination="iKU-X4-4Rz" id="kxK-ii-cpI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hif-kA-0vw" userLabel="First Responder" sceneMemberID="firstResponder"/>

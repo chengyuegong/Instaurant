@@ -1,20 +1,21 @@
 //
 //  NearByViewController.swift
-//  fortesting
+//  instaurantApp
 //
 //  Created by 衡俊吉 on 12/2/18.
-//  Copyright © 2018 junji. All rights reserved.
+//  Author: Junji Heng & Chengyue Gong
+//  Copyright © 2018 CSE@WashU. All rights reserved.
 //
 
 import UIKit
 import MapKit
 import CoreLocation
+
 protocol PassNearProtocol {
-    func setId(id: String)
+    func setIdAddr(id: String, address: String)
 }
 
 class NearByViewController: UIViewController,CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate {
-
     var nearProtocol: PassNearProtocol?
     var latitude: CLLocationDegrees!
     var longitude: CLLocationDegrees!
@@ -63,11 +64,10 @@ class NearByViewController: UIViewController,CLLocationManagerDelegate, UITableV
             theCell.detailTextLabel?.text = "Unknown address"
         }
         return theCell
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        nearProtocol?.setId(id: restaurants[indexPath.row].id)
+        nearProtocol?.setIdAddr(id: restaurants[indexPath.row].id, address: (tableView.cellForRow(at: indexPath)?.detailTextLabel?.text)!)
         navigationController?.popViewController(animated: true)
     }
 

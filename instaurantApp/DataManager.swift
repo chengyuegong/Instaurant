@@ -1,8 +1,9 @@
 //
 //  DataManager.swift
-//  Instaurant
+//  instaurantApp
 //
 //  Created by Metaphor on 11/20/18.
+//  Author: Tiancheng He
 //  Copyright © 2018 CSE@WashU. All rights reserved.
 //
 
@@ -13,11 +14,6 @@ import ARKit
 import Firebase
 import Geofirestore
 //import FirebaseStorage
-
-
-/*
- (1) DataManager是给外部保存数据和存储数据用的。
- */
 
 class DataManager {
     static let storageRef = Storage.storage().reference() // use Cloud Storage to store images

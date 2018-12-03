@@ -1,14 +1,13 @@
 //
 //  Data.swift
-//  Instaurant
+//  instaurantApp
 //
 //  Created by Metaphor on 11/21/18.
+//  Author: Tiancheng He
 //  Copyright © 2018 CSE@WashU. All rights reserved.
 //
 
-/*
- (3) 专门用来接收yelp api的返回Json
- */
+// Accept the json data return from yelp api
 
 import Foundation
 

@@ -1,21 +1,16 @@
 //
 //  Restaurant.swift
-//  Instaurant
+//  instaurantApp
 //
 //  Created by Metaphor on 11/20/18.
+//  Author: Tiancheng He
 //  Copyright © 2018 CSE@WashU. All rights reserved.
-//  Code modified from the google Firestore example project.
+//
+//  Note: Code modified from the google Firestore example project.
 
-/*
- (2) Restaurant是我们保存信息的结构
- 
- 普通属性直接调, 如r.id
- 额外有两个属性:
- r.uiImage, 返回这个餐馆的照片(UIImage)
- r.arImage, 返回这个餐馆的照片(ARReferenceImage)
- 和一个方法：
- r.details(completionHandler)
- 这是一个异步请求Yelp里detail的方法，所以必须有callback函数
+/* The restaurant data from firebase
+ * r.arImage: return ARReferenceImage (for AR detection)
+ * r.details(completionHandler): return YelpBusinessDetail (need callback function)
  */
 
 import Foundation
@@ -105,9 +100,6 @@ struct Restaurant: Codable {
 }
 
 extension Restaurant: DocumentSerializable {
-    
-    
-    
     
     init?(dictionary: [String : Any]) {
         guard let name = dictionary["name"] as? String,

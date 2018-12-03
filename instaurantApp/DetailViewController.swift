@@ -1,8 +1,9 @@
 //
 //  DetailController.swift
-//  Instaurant
+//  instaurantApp
 //
 //  Created by zifan on 11/26/18.
+//  Author: Zifan Wan & Chengyue Gong
 //  Copyright © 2018 CSE@WashU. All rights reserved.
 //
 
@@ -43,8 +44,12 @@ class DetailViewController: UIViewController {
 
     func displayDetail() {
         displayPhotos()
-        location1.text = restaurant.location.display_address[0]
-        location2.text = restaurant.location.display_address.last
+        if (restaurant.location.display_address.count >= 2) {
+            location1.text = restaurant.location.display_address[0]
+            location2.text = restaurant.location.display_address.last
+        } else {
+            location1.text = "Unknown address"
+        }
         displayCategories()
         price.text = restaurant.price
         displayRating()
@@ -82,9 +87,7 @@ class DetailViewController: UIViewController {
     
     func displayRating() {
         let rating = restaurant.rating
-        if (rating == 0) {
-            ratingStars.image = UIImage(named: "0")
-        } else if (rating == 5) {
+        if (rating == 5) {
             ratingStars.image = UIImage(named: "5")
         } else if (rating == 4.5) {
             ratingStars.image = UIImage(named: "4_half")
@@ -102,6 +105,8 @@ class DetailViewController: UIViewController {
             ratingStars.image = UIImage(named: "1_half")
         } else if(rating == 1) {
             ratingStars.image = UIImage(named: "1")
+        } else {
+            ratingStars.image = UIImage(named: "0")
         }
     }
     

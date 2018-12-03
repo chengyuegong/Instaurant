@@ -1,10 +1,13 @@
 //
 //  FavoritesDB.swift
-//  InstaurantApp
+//  instaurantApp
 //
 //  Created by Chengyue Gong on 2018/12/2.
-//  Copyright © 2018 Chengyue Gong. All rights reserved.
+//  Author: Chengyue Gong
+//  Copyright © 2018 CSE@WashU. All rights reserved.
 //
+
+// NOTE: The code is based on the source code of ChengyueGong-Lab4 
 
 import Foundation
 
