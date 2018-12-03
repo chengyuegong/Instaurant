@@ -12,7 +12,7 @@ import MapKit
 import CoreLocation
 
 protocol PassNearProtocol {
-    func setIdAddr(id: String, address: String)
+    func setIdAddr(id: String, address: String, latitude: Double, longitude: Double)
 }
 
 class NearByViewController: UIViewController,CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate {
@@ -67,7 +67,8 @@ class NearByViewController: UIViewController,CLLocationManagerDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        nearProtocol?.setIdAddr(id: restaurants[indexPath.row].id, address: (tableView.cellForRow(at: indexPath)?.detailTextLabel?.text)!)
+        let restaurant = restaurants[indexPath.row]
+        nearProtocol?.setIdAddr(id: restaurant.id, address: (tableView.cellForRow(at: indexPath)?.detailTextLabel?.text)!, latitude: restaurant.coordinates.latitude, longitude: restaurant.coordinates.longitude)
         navigationController?.popViewController(animated: true)
     }
 

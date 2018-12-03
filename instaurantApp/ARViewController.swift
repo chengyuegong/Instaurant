@@ -70,7 +70,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, CLLocationManagerDe
         let longitude = currentLoc?.coordinate.longitude
         print("latitude = \(latitude!), longitude = \(longitude!)")
         dataManager.queryRestaurantsAtLocation(latitude: latitude!, longitude: longitude!) { (restaurants) in
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.global(qos: .background).async {
                 self.configuration.detectionImages.removeAll()
                 for restaurant in restaurants {
                     let arImage: ARReferenceImage! = restaurant.arImage!

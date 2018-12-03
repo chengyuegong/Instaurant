@@ -106,13 +106,21 @@ class DataManager {
         var restaurants: [Restaurant] = []
         let center = CLLocation(latitude: latitude, longitude: longitude)
         let query = DataManager.geoRestaurants.query(withCenter: center, radius: 0.05) //radius of 50 meters
+        let dispatchGroup = DispatchGroup()
+        //var queries: [(String,(Restaurant,Error?)->Void)->Void] = []
+        dispatchGroup.enter()
         let _ = query.observe(.documentEntered, with: { (key, location) in
+            dispatchGroup.enter()
             self.queryRestaurantAtFirebase(withID: key!) { (restaurant, error) in
                 restaurants.append(restaurant)
+                dispatchGroup.leave()
             }
         })
+        dispatchGroup.leave()
         let _ = query.observeReady {
-            completion(restaurants)
+            dispatchGroup.notify(queue: .main) {
+                completion(restaurants)
+            }
         }
     }
     

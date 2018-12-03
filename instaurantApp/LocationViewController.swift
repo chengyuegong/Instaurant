@@ -21,15 +21,20 @@ class LocationViewController: UIViewController,CLLocationManagerDelegate,PassNea
     var name: String?
     var latitude: CLLocationDegrees?
     var longitude: CLLocationDegrees?
+    var restLatitude: Double?
+    var restLongitude: Double?
     var button: UIButton!
     var button2: UIButton!
     let locationManager = CLLocationManager()
     var mapView: MKMapView!
     var locationProtocol: PassLocationProtocol?
+    var annotation = MKPointAnnotation()
     
-    func setIdAddr(id: String, address: String) {
+    func setIdAddr(id: String, address: String, latitude: Double, longitude: Double) {
         self.id = id
         self.address = address
+        self.restLatitude = latitude
+        self.restLongitude = longitude
     }
     
     @objc func handleNearby(sender: UIButton){
@@ -57,13 +62,12 @@ class LocationViewController: UIViewController,CLLocationManagerDelegate,PassNea
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         }
-        locationManager.startUpdatingLocation()
         
         let theMapFrame = CGRect(x: 0, y: 0, width: view.frame.width, height:view.frame.height)
         mapView = MKMapView.init(frame: theMapFrame)
         view.addSubview(mapView)
         
-        let buttonFrame = CGRect(x: view.frame.width/2-135, y: view.frame.height-100, width: 160, height: 30)
+        let buttonFrame = CGRect(x: view.frame.width/2-135, y: view.frame.height-120, width: 160, height: 30)
         button = UIButton.init(type: .system)
         button.frame = buttonFrame
         button.backgroundColor = UIColor.white
@@ -75,16 +79,16 @@ class LocationViewController: UIViewController,CLLocationManagerDelegate,PassNea
         button.addTarget(self, action:#selector(handleNearby(sender:)), for: .touchUpInside)
         view.addSubview(button)
         
-        if (name == nil) {
+        if (name == nil || name == "") {
             button.isEnabled = false
             button.alpha = 0.4
-            let textFrame = CGRect(x: view.frame.width/2-120, y: view.frame.height-140, width: 300, height: 30)
+            let textFrame = CGRect(x: view.frame.width/2-120, y: view.frame.height-160, width: 300, height: 30)
             let hint = UILabel(frame: textFrame)
             hint.text = "You need to input a name at first"
             view.addSubview(hint)
         }
         
-        let buttonFrame2 = CGRect(x: view.frame.width/2+70, y: view.frame.height-100, width: 70, height: 30)
+        let buttonFrame2 = CGRect(x: view.frame.width/2+70, y: view.frame.height-120, width: 70, height: 30)
         button2 = UIButton.init(type: .system)
         button2.frame = buttonFrame2
         button2.backgroundColor = UIColor.white
@@ -96,6 +100,17 @@ class LocationViewController: UIViewController,CLLocationManagerDelegate,PassNea
         button2.addTarget(self, action:#selector(handleLocation(sender:)), for: .touchUpInside)
         view.addSubview(button2)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        locationManager.startUpdatingLocation()
+        if (mapView.annotations.count > 0) {
+            mapView.removeAnnotation(annotation)
+        }
+        if (restLatitude != nil && restLongitude != nil) {
+            annotation.coordinate = CLLocationCoordinate2D(latitude: restLatitude!, longitude: restLongitude!)
+            mapView.addAnnotation(annotation)
+        }
+    }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let curlocation = locations.last
@@ -104,5 +119,6 @@ class LocationViewController: UIViewController,CLLocationManagerDelegate,PassNea
         let viewRegion = MKCoordinateRegion.init(center: (curlocation?.coordinate)!,latitudinalMeters: 50,longitudinalMeters: 50)
         self.mapView.setRegion(viewRegion,animated: true)
         self.mapView.showsUserLocation = true
+        manager.stopUpdatingLocation()
     }
 }

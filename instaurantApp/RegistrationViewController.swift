@@ -67,10 +67,15 @@ class RegistrationViewController: UIViewController, UITableViewDataSource,UITabl
             let action1 = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in}
             alertController.addAction(action1)
             self.present(alertController, animated: true, completion: nil)
-        }else{
-        dataManager.createRestaurant(latitude: latitude!, longitude: longitude!, withName: registerName!, withPhoto: image!, physicalWidthByMeter: Double(width!)!, yelpID: id!) { (restaurant, error) in
+        } else {
+            dataManager.createRestaurant(latitude: latitude!, longitude: longitude!, withName: registerName!, withPhoto: image!, physicalWidthByMeter: Double(width!)!, yelpID: id!) { (restaurant, error) in
             print("Create a restaurant in the firebase: \(restaurant)")
-            self.navigationController?.popViewController(animated: true)
+            let alertController = UIAlertController(title: "Great!", message: "You've added a restaurant to the database!", preferredStyle: .alert)
+            let action1 = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
+                self.navigationController?.popViewController(animated: true)
+            }
+            alertController.addAction(action1)
+            self.present(alertController, animated: true, completion: nil)
             }
         }
     }
@@ -95,11 +100,11 @@ class RegistrationViewController: UIViewController, UITableViewDataSource,UITabl
             imageView.image = image
             imageView.contentMode = .scaleAspectFill
             cell.addSubview(imageView)
-        }else if(indexPath.row == 0 && registerName != nil){
+        }else if(indexPath.row == 0 && registerName != nil && registerName != ""){
             cell = UITableViewCell(style: .value1, reuseIdentifier: "theCell")
             cell.textLabel?.text = myArray[indexPath.row]
             cell.detailTextLabel?.text = registerName!
-        } else if(indexPath.row == 3 && width != nil){
+        } else if(indexPath.row == 3 && width != nil && width != ""){
             cell = UITableViewCell(style: .value1, reuseIdentifier: "theCell")
             cell.textLabel?.text = myArray[indexPath.row]
             cell.detailTextLabel?.text = width!+"m"
